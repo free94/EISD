@@ -1,4 +1,3 @@
-01_prenom	02_genre	03_langage	04_fréquence
 aaliyah	f	english (modern)	0
 aapeli	m	finnish	0
 aapo	m	finnish	0

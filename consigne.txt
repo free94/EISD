@@ -1,0 +1,16 @@
+consigne
+
+//robuste ! (= tous les cas doivent être gérés, et plus générique encore)
+Personnes
+	Nom Prenom
+Dates
+	Jour Mois Annee
+
+//plus libre
+Ne_le
+Parti_politique
+Orientation (gauche, centre, droite) // mais pas de lexique fermé hein !
+Précédente candidature
+Mandats actuels et passés
+
+//bonus : on peut rajouter des choses !
