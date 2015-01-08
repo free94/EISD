@@ -1,19 +1,25 @@
 -- pipelines
 
--- require('file')
 require('date')
+require('partisPolitiques')
+require('mandats')
 
 main = dark.pipeline()
--- main:add(pipeline)
+main:add(partis)
+main:add(mandat)
 main:add(date)
 
 -- tags a afficher
 tags = {
-  -- tag = 'color',
   jour  = 'yellow',
   mois  = 'yellow',
   annee = 'yellow',
   date  = 'red',
+  parti = "blue",
+  mandat = "magenta",
+  PER = "white",
+  NOM = "cyan",
+  PRENOMS = "cyan",
 }
 
 -- affichage

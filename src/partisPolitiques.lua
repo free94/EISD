@@ -1,18 +1,18 @@
-local partis = dark.pipeline()
+partis = dark.pipeline()
 partis:pattern([[
 	[&role
-		( /^[Cc]andidat/ | /^[Aa]dhèr/ | /^[Pp]résid/ | ( /^[Ss]ecrétaire$/ /^nationale?$/? ) | /^[Dd]éputée?$/ )
+		( /^[Cc]andidat/ | /^[Aa]dh�r/ | /^[Pp]r�sid/ | ( /^[Ss]ecr�taire$/ /^nationale?$/? ) | /^[Dd]�put�e?$/ )
 	]
 ]])
 
 partis:pattern([[
 	[&adhesion
-			( /^rejoin/ | /^cré[eaé]$/ | /^dirige/ )
+			( /^rejoin/ | /^cr�[ea�]$/ | /^dirige/ )
 	]
 ]])
 partis:pattern([[
 	[&det
-		( /^d[eu]s?$/ | /^l[ea]?s?$/ | /^à$/ | au ) /^'$/?
+		( /^d[eu]s?$/ | /^l[ea]?s?$/ | /^�$/ | au ) /^'$/?
 	]
 ]])
 
@@ -31,12 +31,3 @@ partis:pattern([[
 		)
 	]
 ]])
-
-local tags = {
-	parti = "red",
-}
-
-for line in io.lines() do
-	line = line:gsub("(%p)", " %1 ")
-	print(partis(line):tostring(tags))
-end
