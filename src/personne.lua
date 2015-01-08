@@ -1,5 +1,4 @@
 personne = dark.pipeline()
-personne:model("model/postag-fr")
 
 --créer un lexique de prénoms en parcourant une liste de prénoms classiques (permet de couvrir la majorité des cas)
 personne:lexicon("&prenom", "../lexiques/prenoms-fr.txt") --AVEC un prénom par ligne!

@@ -1,13 +1,12 @@
--- pipelines
-
 require('date')
-require('partisPolitiques')
-require('mandats')
+require('parti')
+require('mandat')
 require('orientation')
 require('personne')
 
 main = dark.pipeline()
-main:add(partis)
+main:model("model/postag-fr")
+main:add(parti)
 main:add(mandat)
 main:add(date)
 main:add(orientation)
@@ -15,16 +14,18 @@ main:add(personne)
 
 -- tags a afficher
 tags = {
+  date  = 'red',
   jour  = 'yellow',
   mois  = 'yellow',
   annee = 'yellow',
-  date  = 'red',
-  parti = "blue",
-  mandat = "magenta",
-  PER = "white",
+
+  personne = "blue",
   nom = "cyan",
-  PRENOMS = "cyan",
+  prenom = "cyan",
+
+  parti = "green",
   orientation = "green",
+  mandat = "magenta",
 }
 
 -- affichage
