@@ -6,11 +6,11 @@ require('personne')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
+main:add(date)
+main:add(personne)
 main:add(parti)
 main:add(mandat)
-main:add(date)
 main:add(orientation)
-main:add(personne)
 
 -- tags a afficher
 tags = {
@@ -21,7 +21,7 @@ tags = {
 
   personne    = 'blue',
   nom         = 'cyan',
-  prenom      = 'cyan',
+  prenoms     = 'cyan',
 
   parti       = 'yellow',
   orientation = 'green',
