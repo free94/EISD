@@ -32,4 +32,5 @@ tags = {
 for line in io.lines() do
   seq = main(line:gsub('%p', ' %1 '))
   print(seq:tostring(tags))
+  --seq:dump()
 end
