@@ -26,7 +26,7 @@ parti:pattern([[
 			]
 		) | (
 			[&parti
-				/^[Pp]arti$/ &NNC
+				/^[Pp]arti$/ &ADJ
 			]
 		)
 	]

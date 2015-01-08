@@ -14,18 +14,18 @@ main:add(personne)
 
 -- tags a afficher
 tags = {
-  date  = 'red',
-  jour  = 'yellow',
-  mois  = 'yellow',
-  annee = 'yellow',
+  date        = 'red',
+  jour        = 'red',
+  mois        = 'red',
+  annee       = 'red',
 
-  personne = "blue",
-  nom = "cyan",
-  prenom = "cyan",
+  personne    = 'blue',
+  nom         = 'cyan',
+  prenom      = 'cyan',
 
-  parti = "green",
-  orientation = "green",
-  mandat = "magenta",
+  parti       = 'yellow',
+  orientation = 'green',
+  mandat      = 'magenta',
 }
 
 -- affichage
