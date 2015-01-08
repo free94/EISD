@@ -9,7 +9,7 @@ mandat:pattern("[&NUMS /^%d+$/]")
 mandat:pattern([[
 [&mandat
 (/^[Pp]résident/ | /^[Mm]inistre/ | /^[Cc]hef/ | /^[Rr]esponsable/  | /^[Dd]irigeant/ | /^[Ss]ecrétaire/)
-.? .? .? &parti
-(.? .? .? &date)?
+.? .? .? (&parti | &NNC | &NNP)
+(.? .? .? (&date | &annee))?
 ]
 ]])
