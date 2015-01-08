@@ -3,11 +3,15 @@
 require('date')
 require('partisPolitiques')
 require('mandats')
+require('orientation')
+require('personne')
 
 main = dark.pipeline()
 main:add(partis)
 main:add(mandat)
 main:add(date)
+main:add(orientation)
+main:add(personne)
 
 -- tags a afficher
 tags = {
@@ -18,8 +22,9 @@ tags = {
   parti = "blue",
   mandat = "magenta",
   PER = "white",
-  NOM = "cyan",
+  nom = "cyan",
   PRENOMS = "cyan",
+  orientation = "green",
 }
 
 -- affichage

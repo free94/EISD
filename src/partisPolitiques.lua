@@ -1,18 +1,18 @@
 partis = dark.pipeline()
 partis:pattern([[
 	[&role
-		( /^[Cc]andidat/ | /^[Aa]dh�r/ | /^[Pp]r�sid/ | ( /^[Ss]ecr�taire$/ /^nationale?$/? ) | /^[Dd]�put�e?$/ )
+		( /^[Cc]andidat/ | /^[Aa]dhèr/ | /^[Pp]résid/ | ( /^[Ss]ecrétaire$/ /^nationale?$/? ) | /^[Dd]éputée?$/ )
 	]
 ]])
 
 partis:pattern([[
 	[&adhesion
-			( /^rejoin/ | /^cr�[ea�]$/ | /^dirige/ )
+			( /^rejoin/ | /^cré[eaé]$/ | /^dirige/ )
 	]
 ]])
 partis:pattern([[
 	[&det
-		( /^d[eu]s?$/ | /^l[ea]?s?$/ | /^�$/ | au ) /^'$/?
+		( /^d[eu]s?$/ | /^l[ea]?s?$/ | /^à$/ | au ) /^'$/?
 	]
 ]])
 
