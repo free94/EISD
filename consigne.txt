@@ -63,17 +63,24 @@
 			+	  Ingrédient (Alexis)
 				/ 			\
 			catégorie		Quantité (Alexis)
+								/	\
+							valeur	unité
 
 			+Outil (Florian)
 			+Nom (Brahim)
+				\
+				Quantité :pourcombiendepersonnes ()
+
 			+Origine (Florian)
-			+Temps préparation (Brahim)
-			+Temps cuisson (Brahim)
+			+Temps préparation (Alexis)
+			+Temps cuisson (Alexis)
 			+Popularité (Florian)
 			+Etape (Clément)
-			+Difficulté ()
+			+Difficulté (Brahim)
 			+Remarque (Brahim)
 			+Avis (Clément)
+			+Prix depuisLesAvis ()
+
 
 
 --------------------------------------------------
