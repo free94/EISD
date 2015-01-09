@@ -46,6 +46,9 @@
 		+Informations complémentaires autour de la recette
 			Exemple : histoire, date d'invention etc.. (n'est pas toujours présent dans les fichiers recettes)
 
+		+Questionner sur le service
+			Exemple : servir chaud, etc ...
+
 		Gérer les cas : 
 			Ne sait pas faire
 			Ne trouve pas l'info mais comprend
@@ -57,21 +60,21 @@
 
 		LES TAGS :
 
-			+	  Ingrédient
+			+	  Ingrédient (Alexis)
 				/ 			\
-			catégorie		Quantité
+			catégorie		Quantité (Alexis)
 
-			+Outil
-			+Nom
-			+Origine
-			+Temps préparation
-			+Temps cuisson
-			+Popularité
-			+Etape 
-			+Difficulté
-			+Remarque
-			+Avis
-			
+			+Outil (Florian)
+			+Nom (Brahim)
+			+Origine (Florian)
+			+Temps préparation (Brahim)
+			+Temps cuisson (Brahim)
+			+Popularité (Florian)
+			+Etape (Clément)
+			+Difficulté ()
+			+Remarque (Brahim)
+			+Avis (Clément)
+
 
 --------------------------------------------------
 
