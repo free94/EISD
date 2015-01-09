@@ -41,12 +41,37 @@
 
 		+Demander le temps lié à une étape de la recette
 
+		+Obtenir les avis sur une recette
+
+		+Informations complémentaires autour de la recette
+			Exemple : histoire, date d'invention etc.. (n'est pas toujours présent dans les fichiers recettes)
+
 		Gérer les cas : 
 			Ne sait pas faire
 			Ne trouve pas l'info mais comprend
 			Ne comprend pas
 
 	VERSION DE BASE DES ANALYSEURS : documents et questions
+
+		Que faut il taguer ? Quels sont les entités nommées ?
+
+		LES TAGS :
+
+			+	  Ingrédient
+				/ 			\
+			catégorie		Quantité
+
+			+Outil
+			+Nom
+			+Origine
+			+Temps préparation
+			+Temps cuisson
+			+Popularité
+			+Etape 
+			+Difficulté
+			+Remarque
+			+Avis
+			
 
 --------------------------------------------------
 
