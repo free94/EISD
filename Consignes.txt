@@ -1,0 +1,102 @@
+
+
+----------------VENDREDI 9 JANVIER----------------
+	CHOIX DU DOMAINE : CUISINE MARMITTON
+
+	DEFINITION DE LA TACHE :
+
+		+Trouver toutes les recettes qui contiennent <listIngrédient> inclus dans la question
+			Exemple : que puis je faire avec des oeufs du lait et de la farine ? Avec 2 oeufs ? ...
+			-> Il faut que tout ça puisse être corréler avec les quantités
+
+		+Trouver toutes les recettes répondant à <listCritères> 
+			Exemple : Quelles sont les recettes pouvant être faites en moins de 20 minutes !
+
+		+Lister les étapes de la recette pour permettre les questions dessus 
+			Exemple : Que dois-je faire après avoir coupé les oignons ?
+			
+		+Temps élaboration recette
+			Somme temps préparation et temps de cuisson
+
+		+Demander une recette
+			Exemple : je veux la recette du boeuf bourguinon
+
+		+Demander pour quelle quantité est prévue la recette
+			Exemple : Pour combien de personne est faite cette recette ?
+			(dans les recettes il est rarement indiqué le nombre de personne ! mais généralement si ça permet de faire UN cake par exemple, ou 2L de cocktails etc)
+		
+		+(Demander le prix de la recette (basé sur les avis)
+			Exemple : recette chère)
+
+		+Classer les recettes selon leur popularité (nombre d'avis)
+
+		+Classer les recettes selon le pays d'origine (les recettes chinoises etc)
+
+		+Pouvoir lister les outils à utiliser
+			Exemple : il faut un saladier, un fouet etc..
+
+		+Gérer les termes "allergies" etc
+
+		+Gérer le niveau de difficulté de la recette
+
+		+Demander le temps lié à une étape de la recette
+
+		+Obtenir les avis sur une recette
+
+		+Informations complémentaires autour de la recette
+			Exemple : histoire, date d'invention etc.. (n'est pas toujours présent dans les fichiers recettes)
+
+		+Questionner sur le service
+			Exemple : servir chaud, etc ...
+
+		Gérer les cas : 
+			Ne sait pas faire
+			Ne trouve pas l'info mais comprend
+			Ne comprend pas
+
+	VERSION DE BASE DES ANALYSEURS : documents et questions
+
+		Que faut il taguer ? Quels sont les entités nommées ?
+
+		LES TAGS :
+
+			+	  Ingrédient (Alexis)
+				/ 			\
+			catégorie		Quantité (Alexis)
+
+			+Outil (Florian)
+			+Nom (Brahim)
+			+Origine (Florian)
+			+Temps préparation (Brahim)
+			+Temps cuisson (Brahim)
+			+Popularité (Florian)
+			+Etape (Clément)
+			+Difficulté ()
+			+Remarque (Brahim)
+			+Avis (Clément)
+
+
+--------------------------------------------------
+
+
+
+
+
+--------VENDREDI 26 Décembre --------
+
+consigne
+
+//robuste ! (= tous les cas doivent être gérés, et plus générique encore)
+Personnes
+	Nom Prenom
+Dates
+	Jour Mois Annee
+
+//plus libre
+Ne_le
+Parti_politique
+Orientation (gauche, centre, droite) // mais pas de lexique fermé hein !
+Précédente candidature
+Mandats actuels et passés
+
+//bonus : on peut rajouter des choses !

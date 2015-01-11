@@ -1,10 +1,12 @@
 -- require('file')
 require('etape')
+require('avis')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
 --main:add(pipeline)
 main:add(etape)
+main:add(avis)
 
 -- tags a afficher
 tags = {
