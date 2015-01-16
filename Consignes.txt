@@ -1,7 +1,7 @@
 REMARQUES :
 
 Pensez à supprimer les fichiers vides !
-
+ls | shuf | head -n 100
 
 
 ----------------VENDREDI 16 JANVIER----------------
@@ -108,6 +108,7 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 			+Avis (Clément)
 			+Prix depuisLesAvis ()
 			+Substituts (d'après les avis)
+			+entree/plat/dessert
 			+Structure
 				temps_preparation
 				temps_cuisson

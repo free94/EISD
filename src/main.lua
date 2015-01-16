@@ -1,26 +1,31 @@
 require('etape')
 require('quantite')
+<<<<<<< HEAD
 require('quantite')
 require('structure')
+require('origine')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
 main:add(etape)
 main:add(quantite)
 main:add(structure)
+main:add(origine)
 
 -- tags a afficher
 tags = {
-	--[[etape    = 'red',
-  quantite = 'green',
-  valeur   = 'green',
-  unite    = 'green',]]
-  temps_preparation = 'yellow',
-  temps_cuisson = 'yellow',
-  ingredients = 'yellow',
-  preparation = 'yellow',
-  manipulation = 'yellow',
-  extra = 'yellow'
+	etape    = 'red',
+	quantite = 'green',
+	valeur   = 'green',
+	unite    = 'green',
+	temps_preparation = 'yellow',
+	temps_cuisson = 'yellow',
+	ingredients = 'yellow',
+	preparation = 'yellow',
+	manipulation = 'yellow',
+	extra = 'yellow',
+	origine  = 'magenta',
+
 }
 
 -- affichage
