@@ -1,12 +1,12 @@
 require('etape')
-require('avis')
+-- require('avis')
 require('quantite')
 require('origine')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
 main:add(etape)
-main:add(avis)
+-- main:add(avis)
 main:add(quantite)
 main:add(origine)
 
