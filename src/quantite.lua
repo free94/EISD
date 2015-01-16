@@ -1,7 +1,7 @@
 quantite = dark.pipeline()
 quantite:pattern([[
   [&quantite
-    [&valeur /%d+/]
+    [&valeur &NUM+ &PCT? &NUM* ]
     [&unite /%a+/]
   ]
 ]]
