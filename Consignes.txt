@@ -1,3 +1,9 @@
+REMARQUES :
+
+Pensez à supprimer les fichiers vides !
+
+
+
 ----------------VENDREDI 16 JANVIER----------------
 			  LA BASE DE CONNAISSANCE
 
@@ -14,6 +20,9 @@ pays = {
 	["		"] = ,
 	...
 }
+
+#pays renvoi la taille de la table pays
+pays[#pays + 1] = // permet de rajouter un élément en fin de liste/table
 
 POur sauvegarder notre table utilisation de la fonction serializable dispo avec dark
 
@@ -98,6 +107,7 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 			+Remarque (Brahim)
 			+Avis (Clément)
 			+Prix depuisLesAvis ()
+			+Substituts (d'après les avis)
 
 
 
@@ -125,3 +135,11 @@ Précédente candidature
 Mandats actuels et passés
 
 //bonus : on peut rajouter des choses !
+
+
+
+
+
+
+
+
