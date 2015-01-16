@@ -1,3 +1,30 @@
+REMARQUES :
+
+Pensez à supprimer les fichiers vides !
+
+
+
+----------------VENDREDI 16 JANVIER----------------
+			  LA BASE DE CONNAISSANCE
+
+Pour chacune des questions voir comment on stock dans notre base les éléments, comment on structure les choses
+
+Pas vraiment une BD, mais une TABLE en LUA.
+
+RAPPELS SYNTAXE TABLE en LUA :
+
+pays = {
+	["France"] = {
+		["Capitale"] = "Paris"
+	},								//pays.france.capitale ou si f = "france" et i = "Paris" : pays[f][i] et au début pays[f].capitale = i
+	["		"] = ,
+	...
+}
+
+#pays renvoi la taille de la table pays
+pays[#pays + 1] = // permet de rajouter un élément en fin de liste/table
+
+POur sauvegarder notre table utilisation de la fonction serializable dispo avec dark
 
 
 ----------------VENDREDI 9 JANVIER----------------
@@ -80,6 +107,7 @@
 			+Remarque (Brahim)
 			+Avis (Clément)
 			+Prix depuisLesAvis ()
+			+Substituts (d'après les avis)
 
 
 
@@ -107,3 +135,11 @@ Précédente candidature
 Mandats actuels et passés
 
 //bonus : on peut rajouter des choses !
+
+
+
+
+
+
+
+
