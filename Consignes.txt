@@ -36,12 +36,12 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 			Exemple : que puis je faire avec des oeufs du lait et de la farine ? Avec 2 oeufs ? ...
 			-> Il faut que tout ça puisse être corréler avec les quantités
 
-		+Trouver toutes les recettes répondant à <listCritères> 
+		+Trouver toutes les recettes répondant à <listCritères>
 			Exemple : Quelles sont les recettes pouvant être faites en moins de 20 minutes !
 
-		+Lister les étapes de la recette pour permettre les questions dessus 
+		+Lister les étapes de la recette pour permettre les questions dessus
 			Exemple : Que dois-je faire après avoir coupé les oignons ?
-			
+
 		+Temps élaboration recette
 			Somme temps préparation et temps de cuisson
 
@@ -51,7 +51,7 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 		+Demander pour quelle quantité est prévue la recette
 			Exemple : Pour combien de personne est faite cette recette ?
 			(dans les recettes il est rarement indiqué le nombre de personne ! mais généralement si ça permet de faire UN cake par exemple, ou 2L de cocktails etc)
-		
+
 		+(Demander le prix de la recette (basé sur les avis)
 			Exemple : recette chère)
 
@@ -76,7 +76,7 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 		+Questionner sur le service
 			Exemple : servir chaud, etc ...
 
-		Gérer les cas : 
+		Gérer les cas :
 			Ne sait pas faire
 			Ne trouve pas l'info mais comprend
 			Ne comprend pas
@@ -108,6 +108,12 @@ POur sauvegarder notre table utilisation de la fonction serializable dispo avec 
 			+Avis (Clément)
 			+Prix depuisLesAvis ()
 			+Substituts (d'après les avis)
+			+Structure
+				temps_preparation
+				temps_cuisson
+				ingredients
+				preparation
+				extra
 
 
 
@@ -135,11 +141,3 @@ Précédente candidature
 Mandats actuels et passés
 
 //bonus : on peut rajouter des choses !
-
-
-
-
-
-
-
-
