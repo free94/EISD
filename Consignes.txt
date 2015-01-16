@@ -1,3 +1,21 @@
+----------------VENDREDI 16 JANVIER----------------
+			  LA BASE DE CONNAISSANCE
+
+Pour chacune des questions voir comment on stock dans notre base les éléments, comment on structure les choses
+
+Pas vraiment une BD, mais une TABLE en LUA.
+
+RAPPELS SYNTAXE TABLE en LUA :
+
+pays = {
+	["France"] = {
+		["Capitale"] = "Paris"
+	},								//pays.france.capitale ou si f = "france" et i = "Paris" : pays[f][i] et au début pays[f].capitale = i
+	["		"] = ,
+	...
+}
+
+POur sauvegarder notre table utilisation de la fonction serializable dispo avec dark
 
 
 ----------------VENDREDI 9 JANVIER----------------
