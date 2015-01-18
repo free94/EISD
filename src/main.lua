@@ -13,15 +13,15 @@ main:add(origine)
 -- tags a afficher
 tags = {
 	etape    = 'red',
-  quantite = 'green',
-  valeur   = 'green',
-  unite    = 'green',
-  origine  = 'magenta',
+  	quantite = 'green',
+  	valeur   = 'green',
+  	unite    = 'green',
+  	origine  = 'magenta',
 }
 
 -- affichage
 for line in io.lines() do
   seq = main(line:gsub('%p', ' %1 '))
   print(seq:tostring(tags))
-  -- seq:dump()
+  --seq:dump()
 end
