@@ -6,6 +6,7 @@ structure = dark.pipeline()
 	Pour la même raison, le tagging sera erroné dans le cas d'une concaténation de fichiers.
 ]]
 
+--[=[
 structure:pattern([[
 		[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
 		[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
@@ -14,14 +15,21 @@ structure:pattern([[
 	]])
 structure:pattern("[&extra Remarques /^:$/ .* ]")
 structure:pattern("&ingredients [&manipulation .*?] &extra")
-
-
---[=[
-structure:pattern([[
-		[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
-		[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
-		[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ .*? ]
-		[&preparation /^Préparation$/ de la recette /^:$/ .*? ]
-		( /^%EOF$/ | [&extra Remarques /^:$/ .* ] )
-	]])
 ]=]
+
+structure:pattern([[
+		[&recette
+			(
+			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
+			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
+			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ [&ingredient /^-$/ .]*? ]
+			[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)*? ]
+			[&extra Remarques /^:$/ .* ]
+			) | (
+			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
+			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
+			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ [&ingredient /^-$/ /^[^-]/*? ]*? ]
+			[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)* ]
+			)
+		]
+	]])

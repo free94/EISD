@@ -23,6 +23,7 @@ tags = {
 	temps_preparation = 'yellow',
 	temps_cuisson = 'yellow',
 	ingredients = 'yellow',
+	ingredient = 'magenta',
 	preparation = 'yellow',
 	manipulation = 'yellow',
 	extra = 'yellow',
