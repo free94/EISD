@@ -10,7 +10,8 @@ structure:pattern([[
 		[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
 		[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
 		[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ .*? ]
-		[&preparation /^Préparation$/ de la recette /^:$/ .* ]
+		[&preparation /^Préparation$/ de la recette /^:$/ .*? ]
+		( /^%z$/ | [&extra Remarques /^:$/ .* ] )
 	]])
-structure:pattern("[&extra Remarques /^:$/ .* ]")
-structure:pattern("&ingredients [&manipulation .*?] &extra")
+
+--structure:pattern("&ingredients [&manipulation .*?] &extra")

@@ -1,7 +1,5 @@
 require('etape')
 require('quantite')
-<<<<<<< HEAD
-require('quantite')
 require('structure')
 require('origine')
 
