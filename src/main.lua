@@ -2,6 +2,7 @@ require('etape')
 require('quantite')
 require('structure')
 require('origine')
+require ('outil')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -9,6 +10,7 @@ main:add(etape)
 main:add(quantite)
 main:add(structure)
 main:add(origine)
+main:add(outil)
 
 -- tags a afficher
 tags = {
@@ -23,7 +25,7 @@ tags = {
 	manipulation = 'yellow',
 	extra = 'yellow',
 	origine  = 'magenta',
-
+	outil = 'cyan',
 }
 
 -- affichage
@@ -31,7 +33,7 @@ tags = {
 for line in io.lines() do
   seq = main(line:gsub('%p', ' %1 '))
   print(seq:tostring(tags))
-  -- seq:dump()
+  --seq:dump()
 end
 ]]
 
