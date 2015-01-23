@@ -1,0 +1,936 @@
+abricot
+Acca sellowiana
+acérola
+Actinidia arguta
+Actinidia chinensis
+airelle du mont Ida
+airelle rouge
+Akebia quinata
+amande
+amande-pays
+amande tropicale
+amélanches du Canada
+Amelanchier canadensis
+Anacardium occidentale
+ananas
+Ananas comosus
+Annona glabra
+Annona muricata
+Annona squamosa
+anone des marais
+arbouse
+Arbutus unedo
+argouse
+aronia
+Aronia melanocarpa
+Artocarpus altilis
+Artocarpus odoratissimus
+Asimina triloba
+asimine
+atoca
+atoka
+atte
+Averrhoa carambola
+avocat
+banane 'Basrai'
+banane 'Dwarf Cavendish'
+banane 'Petite Naine'
+barbadine
+bergamote
+bibace
+bleuet
+Brahea edulis
+Butia capitata
+cacao
+calamondin
+canneberge
+carambole
+Carica papaya
+Carica pubescens
+Carissa macrocarpa
+Casimiroa edulis
+cédrat
+cédrat 'de Corse'
+cédrat 'Diamante'
+cédrat 'Main de Bouddha'
+cériman
+cérimon
+cerise
+cerise de la Barbade
+cerise des Antilles
+cerise douce
+châtaigne-pays
+chichourle
+chinotto
+citron
+Citrus aurantium
+Citrus aurantium 'Bouquetier de Fleur'
+Citrus aurantium 'Bouquetier de Nice'
+Citrus aurantium 'Myrtifolia'
+Citrus bergamia
+Citrus limon
+Citrus maxima
+Citrus medica
+Citrus medica 'de Corse'
+Citrus medica 'Diamante'
+Citrus medica 'Main de Bouddha'
+Citrus mitis
+Citrus paradisi
+Citrus sinensis
+Citrus unshiu
+Citrus unshiu 'Okitsu'
+Citrus unshiu 'Owari'
+Coccoloba uvifera
+Cocos nucifera
+coing
+concombre cornu d'Afrique
+coqueret du Pérou
+coquito
+Cordia sebestena
+corme
+cornouille
+Cornus mas
+corossol
+corossol des marais
+corossol épineux
+Corylus avellana
+Cucumis metuliferus
+curuba
+curuba equatoriana
+curuba india
+curuba rouge
+Cydonia oblonga
+Cyphomandra betacea
+date Chinoise
+datte
+Diospyros kaki
+Diospyros lotus
+Elaeagnus umbellata
+épine noire
+Eriobotrya japonica
+Euphoria longan
+évi
+feijoa
+Ficus carica
+figue
+figue de Barbarie
+figue d'Inde
+Flacourtia jangomas
+Fortunella japonica
+Fortunella margarita
+Fortunella obovata
+Fragaria vesca
+fraise commune
+fraise des bois
+fraise sauvage
+framboise
+fruit d'Akebia quinata
+fruit de la passiflore anémone
+fruit de la passiflore bleue
+fruit de la passion
+fruit de l'arbre à pain
+fruit de la ronce
+fruit délicieux
+fruit de sébestier
+fruit du badamier
+fruit du palmier abricot
+fruit du palmier à gelées
+fruit du palmier à vinaigre
+fruit du palmier de Guadalupe
+fruit du palmier de Saint Pierre
+fruit du plaqueminier
+fruits de fuchsia rampant
+Fuchsia procumbens
+Garcinia mangostana
+girembelle
+goyave
+goyave ananas
+goyave de Chine
+goyave du Brésil
+goyave du Chili
+goyave fraise
+goyave-pomme
+grenade
+grenadelle
+grenadille
+grenadille 'Black Knight'
+grenadille douce
+grenadille géante
+grenadille jaune
+grenadille sauvage
+grenadille violette
+groseille
+groseille à maquereaux
+groseille de Chine
+groseille du Cap
+groseille étoilée
+guigne
+Hippophae rhamnoides
+Hylocereus undatus
+jambose rouge
+Jubaea chilensis
+Juglans regia
+jujube
+kaki
+kiwai
+kiwano
+kiwi
+kiwi de Sibérie
+kumquat Fukushu
+kumquat Marumi
+kumquat Nagami
+kumquat ovale
+kumquat rond
+letchi
+litchi
+litchi chevelu
+Litchi sinensis
+longane
+longani
+loquat
+Macadamia integrifolia
+Malpighia glabra
+Malus communis
+mandarine satsuma
+mandarine satsuma 'Okitsu'
+mandarine satsuma 'Owari'
+Mangifera indica
+mangoustan
+mangue
+marang
+Marie-gougeat
+maritambour
+maypop
+merise
+merise pays
+mesle
+Mespilus germanica
+métulon
+mirabelle
+Monstera deliciosa
+Morus alba
+Morus kagayamae
+mûre
+mûre blanche
+mûre du mûrier-platane
+mûron
+murtilla
+Musa acuminata 'Dwarf Cavendish'
+myrte
+myrte commun
+myrtille arbustive
+myrtille géante
+Myrtus communis
+nèfle
+nèfle commune
+nèfle du Japon
+Nephelium lappaceum
+noisette
+noisette commune
+noix
+noix commune
+noix de cajou
+noix de coco
+noix de coco du Chili
+noix de Macadam
+noix du Queensland
+noix royale
+oeil de dragon
+Olea europaea
+olive
+olive d'automne
+olive de Sibérie
+oponce
+Opuntia ficus-indica
+orange
+orange amère
+orange amère à feuilles de myrte
+orange amère 'Bouquetier de Fleur'
+orange amère 'Bouquetier de Nice'
+orange d'appartement
+orangine
+pamplemousse
+papaye
+papaye des montagnes
+Passiflora actinia
+Passiflora alata
+Passiflora antioquiensis
+Passiflora caerulea
+Passiflora edulis
+Passiflora edulis 'Black Knight'
+Passiflora edulis var. flavicarpa
+Passiflora foetida
+Passiflora incarnata
+Passiflora laurifolia
+Passiflora ligularis
+Passiflora mollissima
+Passiflora quadrangularis
+Passiflora tarminiana
+passiflore poc-poc
+pêche
+pepino
+Persea americana
+Phoenix dactylifera
+Phyllanthus acidus
+physalis
+Physalis peruviana
+pistache
+Pistacia vera
+pitahaya
+pitaya
+plaquemine d'Europe
+poire
+poire commune
+poire de table
+poire-melon
+pomelo
+pomme
+pomme cajou
+pomme cannelle
+pomme d'eau
+pomme de Cydon
+pomme de cythère
+pomme d'or
+pomme-kangourou de Tasmanie
+pomme liane
+pomme Mexicaine
+pomme rosée
+pomme-surette
+prune
+prune de cythère
+prune d'Inde
+prune du Natal
+prunelle
+Prunus armeniaca
+Prunus avium
+Prunus domestica
+Prunus dulcis
+Prunus persica
+Prunus spinosa
+Psidium cattleianum
+Psidium guajava
+Punica granatum
+Pyrus communis
+quetsche
+raisin
+raisin bord-de-mer
+raisin marine
+ramboutan
+Ribes rubrum
+Ribes uva-crispa
+Rubus fruticosus
+Rubus idaeus
+sapote blanche
+shaddock
+Solanum laciniatum
+Solanum muricatum
+Sorbus domestica
+souris végétale
+Spondias dulcis
+surelle
+Syzygium malaccense
+tacso
+tacso de Castilla
+tamarillo
+tamarin
+tamarin des Indes
+Tamarindus indica
+tarap
+Terminalia catappa
+Theobroma cacao
+tomate en arbre
+Triphasia trifoliata
+ugni
+Ugni molinae
+Vaccinium corymbosum
+Vaccinium macrocarpum
+Vaccinium vitis-idaea
+Vangueria madagascariensis
+vavandrika
+vavangue
+vigne
+Vitis vinifera
+Yucca filifera
+Ziziphus jujuba
+Ziziphus mauritiana
+Abricot
+Airelle
+Alkékenge
+Amande
+Amélanche
+Ananas
+Arbouse
+Asiminier trilobé
+Avocat
+Banane
+Bergamote
+Bigarade ou Chinois
+Brugnon
+Canneberge
+Cassis
+Cerise
+Châtaigne
+Citron
+Clémentine
+Coing
+Cornouiller du Canada
+Cynorrhodon
+Datte
+Épine-vinette
+Figue
+Figue de barbarie
+Fraise
+Framboise
+Grenade
+Groseille
+Jujube
+Kaki
+Kiwi
+Lime
+Mandarine
+Marron
+Melon
+Mirabelle
+Mûre
+Myrte
+Myrtille
+Nèfle
+Nèfle du Japon
+Noisette
+Noix
+Olive
+Orange
+Pamplemousse
+Pastèque
+Pêche
+Pistache
+Plaquebière ou Chicouté
+Poire
+Pomme
+Pomélos
+Prune et Pruneau
+Quetsche
+Raisin
+Carambole
+Cerise de Cayenne
+Durian
+Fe'i
+Fruit-à-pain
+Fruit de la passion
+Girembelle
+Goyave
+Icaque
+Jacque
+Jambose rouge
+Kiwano
+Litchi
+Longane
+Mangoustan
+Mangue
+Melon
+Mombin
+Myrobolan
+Nèfle du Japon
+Noix de cajou
+Noix de coco
+Noix de muscade
+Pain de singe
+Papaye
+Pepino
+Physalis
+Pitaya
+Pomme de cajou
+Pomme de lait
+Prune de Cythère
+Quenette
+Ramboutan
+Salak
+Sapote
+Sapotille
+Tamarillo
+Tamarin
+Tamarin des Indes ou néflier des Indes
+Tamarin d'Inde
+Taxo
+Yuzu
+Aubergine
+Avocat
+Chayote
+Concombre
+Cornichon
+Courge
+courgette
+potiron
+citrouille
+Melon
+Poivron
+Tomate
+Litchi
+abricot
+acca sellowiana
+acérola
+actinidia arguta
+actinidia chinensis
+airelle du mont ida
+airelle rouge
+akebia quinata
+amande
+amande-pays
+amande tropicale
+amélanches du canada
+amelanchier canadensis
+anacardium occidentale
+ananas
+ananas comosus
+annona glabra
+annona muricata
+annona squamosa
+anone des marais
+arbouse
+arbutus unedo
+argouse
+aronia
+aronia melanocarpa
+artocarpus altilis
+artocarpus odoratissimus
+asimina triloba
+asimine
+atoca
+atoka
+atte
+averrhoa carambola
+avocat
+banane 'basrai'
+banane 'dwarf cavendish'
+banane 'petite naine'
+barbadine
+bergamote
+bibace
+bleuet
+brahea edulis
+butia capitata
+cacao
+calamondin
+canneberge
+carambole
+carica papaya
+carica pubescens
+carissa macrocarpa
+casimiroa edulis
+cédrat
+cédrat 'de corse'
+cédrat 'diamante'
+cédrat 'main de bouddha'
+cériman
+cérimon
+cerise
+cerise de la barbade
+cerise des antilles
+cerise douce
+châtaigne-pays
+chichourle
+chinotto
+citron
+citrus aurantium
+citrus aurantium 'bouquetier de fleur'
+citrus aurantium 'bouquetier de nice'
+citrus aurantium 'myrtifolia'
+citrus bergamia
+citrus limon
+citrus maxima
+citrus medica
+citrus medica 'de corse'
+citrus medica 'diamante'
+citrus medica 'main de bouddha'
+citrus mitis
+citrus paradisi
+citrus sinensis
+citrus unshiu
+citrus unshiu 'okitsu'
+citrus unshiu 'owari'
+coccoloba uvifera
+cocos nucifera
+coing
+concombre cornu d'afrique
+coqueret du pérou
+coquito
+cordia sebestena
+corme
+cornouille
+cornus mas
+corossol
+corossol des marais
+corossol épineux
+corylus avellana
+cucumis metuliferus
+curuba
+curuba equatoriana
+curuba india
+curuba rouge
+cydonia oblonga
+cyphomandra betacea
+date chinoise
+datte
+diospyros kaki
+diospyros lotus
+elaeagnus umbellata
+épine noire
+eriobotrya japonica
+euphoria longan
+évi
+feijoa
+ficus carica
+figue
+figue de barbarie
+figue d'inde
+flacourtia jangomas
+fortunella japonica
+fortunella margarita
+fortunella obovata
+fragaria vesca
+fraise commune
+fraise des bois
+fraise sauvage
+framboise
+fruit d'akebia quinata
+fruit de la passiflore anémone
+fruit de la passiflore bleue
+fruit de la passion
+fruit de l'arbre à pain
+fruit de la ronce
+fruit délicieux
+fruit de sébestier
+fruit du badamier
+fruit du palmier abricot
+fruit du palmier à gelées
+fruit du palmier à vinaigre
+fruit du palmier de guadalupe
+fruit du palmier de saint pierre
+fruit du plaqueminier
+fruits de fuchsia rampant
+fuchsia procumbens
+garcinia mangostana
+girembelle
+goyave
+goyave ananas
+goyave de chine
+goyave du brésil
+goyave du chili
+goyave fraise
+goyave-pomme
+grenade
+grenadelle
+grenadille
+grenadille 'black knight'
+grenadille douce
+grenadille géante
+grenadille jaune
+grenadille sauvage
+grenadille violette
+groseille
+groseille à maquereaux
+groseille de chine
+groseille du cap
+groseille étoilée
+guigne
+hippophae rhamnoides
+hylocereus undatus
+jambose rouge
+jubaea chilensis
+juglans regia
+jujube
+kaki
+kiwai
+kiwano
+kiwi
+kiwi de sibérie
+kumquat fukushu
+kumquat marumi
+kumquat nagami
+kumquat ovale
+kumquat rond
+letchi
+litchi
+litchi chevelu
+litchi sinensis
+longane
+longani
+loquat
+macadamia integrifolia
+malpighia glabra
+malus communis
+mandarine satsuma
+mandarine satsuma 'okitsu'
+mandarine satsuma 'owari'
+mangifera indica
+mangoustan
+mangue
+marang
+marie-gougeat
+maritambour
+maypop
+merise
+merise pays
+mesle
+mespilus germanica
+métulon
+mirabelle
+monstera deliciosa
+morus alba
+morus kagayamae
+mûre
+mûre blanche
+mûre du mûrier-platane
+mûron
+murtilla
+musa acuminata 'dwarf cavendish'
+myrte
+myrte commun
+myrtille arbustive
+myrtille géante
+myrtus communis
+nèfle
+nèfle commune
+nèfle du japon
+nephelium lappaceum
+noisette
+noisette commune
+noix
+noix commune
+noix de cajou
+noix de coco
+noix de coco du chili
+noix de macadam
+noix du queensland
+noix royale
+oeil de dragon
+olea europaea
+olive
+olive d'automne
+olive de sibérie
+oponce
+opuntia ficus-indica
+orange
+orange amère
+orange amère à feuilles de myrte
+orange amère 'bouquetier de fleur'
+orange amère 'bouquetier de nice'
+orange d'appartement
+orangine
+pamplemousse
+papaye
+papaye des montagnes
+passiflora actinia
+passiflora alata
+passiflora antioquiensis
+passiflora caerulea
+passiflora edulis
+passiflora edulis 'black knight'
+passiflora edulis var. flavicarpa
+passiflora foetida
+passiflora incarnata
+passiflora laurifolia
+passiflora ligularis
+passiflora mollissima
+passiflora quadrangularis
+passiflora tarminiana
+passiflore poc-poc
+pêche
+pepino
+persea americana
+phoenix dactylifera
+phyllanthus acidus
+physalis
+physalis peruviana
+pistache
+pistacia vera
+pitahaya
+pitaya
+plaquemine d'europe
+poire
+poire commune
+poire de table
+poire-melon
+pomelo
+pomme
+pomme cajou
+pomme cannelle
+pomme d'eau
+pomme de cydon
+pomme de cythère
+pomme d'or
+pomme-kangourou de tasmanie
+pomme liane
+pomme mexicaine
+pomme rosée
+pomme-surette
+prune
+prune de cythère
+prune d'inde
+prune du natal
+prunelle
+prunus armeniaca
+prunus avium
+prunus domestica
+prunus dulcis
+prunus persica
+prunus spinosa
+psidium cattleianum
+psidium guajava
+punica granatum
+pyrus communis
+quetsche
+raisin
+raisin bord-de-mer
+raisin marine
+ramboutan
+ribes rubrum
+ribes uva-crispa
+rubus fruticosus
+rubus idaeus
+sapote blanche
+shaddock
+solanum laciniatum
+solanum muricatum
+sorbus domestica
+souris végétale
+spondias dulcis
+surelle
+syzygium malaccense
+tacso
+tacso de castilla
+tamarillo
+tamarin
+tamarin des indes
+tamarindus indica
+tarap
+terminalia catappa
+theobroma cacao
+tomate en arbre
+triphasia trifoliata
+ugni
+ugni molinae
+vaccinium corymbosum
+vaccinium macrocarpum
+vaccinium vitis-idaea
+vangueria madagascariensis
+vavandrika
+vavangue
+vigne
+vitis vinifera
+yucca filifera
+ziziphus jujuba
+ziziphus mauritiana
+abricot
+airelle
+alkékenge
+amande
+amélanche
+ananas
+arbouse
+asiminier trilobé
+avocat
+banane
+bergamote
+bigarade ou chinois
+brugnon
+canneberge
+cassis
+cerise
+châtaigne
+citron
+clémentine
+coing
+cornouiller du canada
+cynorrhodon
+datte
+épine-vinette
+figue
+figue de barbarie
+fraise
+framboise
+grenade
+groseille
+jujube
+kaki
+kiwi
+lime
+mandarine
+marron
+melon
+mirabelle
+mûre
+myrte
+myrtille
+nèfle
+nèfle du japon
+noisette
+noix
+olive
+orange
+pamplemousse
+pastèque
+pêche
+pistache
+plaquebière ou chicouté
+poire
+pomme
+pomélos
+prune et pruneau
+quetsche
+raisin
+carambole
+cerise de cayenne
+durian
+fe'i
+fruit-à-pain
+fruit de la passion
+girembelle
+goyave
+icaque
+jacque
+jambose rouge
+kiwano
+litchi
+longane
+mangoustan
+mangue
+melon
+mombin
+myrobolan
+nèfle du japon
+noix de cajou
+noix de coco
+noix de muscade
+pain de singe
+papaye
+pepino
+physalis
+pitaya
+pomme de cajou
+pomme de lait
+prune de cythère
+quenette
+ramboutan
+salak
+sapote
+sapotille
+tamarillo
+tamarin
+tamarin des indes ou néflier des indes
+tamarin d'inde
+taxo
+yuzu
+aubergine
+avocat
+chayote
+concombre
+cornichon
+courge
+courgette
+potiron
+citrouille
+melon
+poivron
+tomate
+litchi
