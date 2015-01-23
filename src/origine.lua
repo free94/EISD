@@ -1,5 +1,4 @@
 origine = dark.pipeline()
-origine:model("model/postag-fr")
 
 origine:pattern([[
 	[&origine

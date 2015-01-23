@@ -2,7 +2,7 @@ require('etape')
 require('quantite')
 require('structure')
 require('origine')
-require ('outil')
+require('outil')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -28,14 +28,6 @@ tags = {
 	outil = 'cyan',
 }
 
--- affichage
---[[
-for line in io.lines() do
-  seq = main(line:gsub('%p', ' %1 '))
-  print(seq:tostring(tags))
-  --seq:dump()
-end
-]]
-
-seq = main(io.read("*all"):gsub('%p', ' %1 '))
+seq = main(io.read('*all'):gsub('%p', ' %1 '))
+-- seq:dump()
 print(seq:tostring(tags))
