@@ -30,6 +30,7 @@ Four
 Four à vapeur
 Four à pain
 Four à micro-ondes
+Fourchette
 Micro-onde
 Gril
 Grille
@@ -102,7 +103,11 @@ Couteau filet de sole
 Couteau Sashimi
 Couteau scie
 Couperet
+Cas
+Cac
+Cuillère
 Cuillère à pommes parisienne
+Cuillère à soupe
 Désosseur
 Écailleur
 Éminceur
