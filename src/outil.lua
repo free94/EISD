@@ -1,3 +1,3 @@
 outil = dark.pipeline()
 
-origine:pattern("[&outil ]")
+outil:pattern("[&outil ]")

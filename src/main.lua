@@ -1,7 +1,7 @@
 require('etape')
 require('quantite')
 require('structure')
-require('origine')
+--require('origine')
 require ('outil')
 
 main = dark.pipeline()
@@ -9,7 +9,7 @@ main:model("model/postag-fr")
 main:add(etape)
 main:add(quantite)
 main:add(structure)
-main:add(origine)
+--main:add(origine)
 main:add(outil)
 
 -- tags a afficher
@@ -24,7 +24,7 @@ tags = {
 	preparation = 'yellow',
 	manipulation = 'yellow',
 	extra = 'yellow',
-	origine  = 'magenta',
+	--origine  = 'magenta',
 	outil = 'cyan',
 }
 
