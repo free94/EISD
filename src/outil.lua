@@ -1,3 +1,5 @@
 outil = dark.pipeline()
 
-origine:pattern("[&outil ]")
+outil:lexicon("&outils", "lexicon/outilsCuisine.txt")
+
+outil:pattern("[&outil &outils /^.?$/*]")
