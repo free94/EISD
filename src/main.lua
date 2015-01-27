@@ -2,6 +2,9 @@ require('quantite')
 require('structure')
 require('origine')
 require ('outil')
+require ('remarque')
+require ('difficulte')
+require ('prix')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -9,7 +12,9 @@ main:add(quantite)
 main:add(structure)
 main:add(origine)
 main:add(outil)
-
+main:add(remarque)
+main:add(difficulte)
+main:add(prix)
 -- tags a afficher
 tags = {
 	etape    = 'red',
@@ -25,6 +30,10 @@ tags = {
 	extra = 'yellow',
 	origine  = 'magenta',
 	outil = 'cyan',
+	remarque='red',
+	difficulte='green',
+	prix ='blue',
+	nom = 'yellow',
 }
 
 -- affichage
@@ -38,8 +47,6 @@ end
 
 seq = main(io.read("*all"):gsub('%p', ' %1 '))
 print(seq:tostring(tags))
-
-
 
 function concatener(indices)
 	valeur = nil
@@ -65,5 +72,3 @@ for k,v in pairs(seq["&etape"]) do
 end
 
 print(serialize(recettes))
-
-
