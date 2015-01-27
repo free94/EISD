@@ -48,3 +48,4 @@ end
 
 seq = main(io.read("*all"):gsub('%p', ' %1 '))
 print(seq:tostring(tags))
+--seq:dump()
