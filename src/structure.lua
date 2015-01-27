@@ -20,12 +20,14 @@ structure:pattern("&ingredients [&manipulation .*?] &extra")
 structure:pattern([[
 		[&recette
 			(
+			[&nom .*?]
 			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
 			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
 			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ [&ingredient /^-$/ .]*? ]
 			[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)*? ]
 			[&extra Remarques /^:$/ .* ]
 			) | (
+			[&nom .*?]
 			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
 			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
 			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ [&ingredient /^-$/ /^[^-]/*? ]*? ]
