@@ -5,6 +5,8 @@ require('origine')
 require ('outil')
 require ('remarque')
 require ('difficulte')
+require ('prix')
+
 main = dark.pipeline()
 main:model("model/postag-fr")
 main:add(etape)
@@ -14,6 +16,7 @@ main:add(origine)
 main:add(outil)
 main:add(remarque)
 main:add(difficulte)
+main:add(prix)
 -- tags a afficher
 tags = {
 	etape    = 'red',
@@ -31,7 +34,7 @@ tags = {
 	outil = 'cyan',
 	remarque='red',
 	difficulte='green',
-
+	prix ='blue'
 }
 
 -- affichage
