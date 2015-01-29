@@ -1,7 +1,7 @@
 REMARQUES :
 
 Pensez à supprimer les fichiers vides !
-ls | shuf | head -n 100
+ls  | shuf | head -n 200 | xargs cat | grep cher
 
 
 ----------------VENDREDI 16 JANVIER----------------
