@@ -17,10 +17,10 @@ main:add(difficulte)
 main:add(prix)
 -- tags a afficher
 tags = {
-	etape    = 'red',
-	quantite = 'green',
-	valeur   = 'green',
-	unite    = 'green',
+	etape             = 'red',
+	quantite          = 'green',
+	valeur            = 'green',
+	unite             = 'green',
 	temps_preparation = 'yellow',
 	temps_cuisson = 'yellow',
 	ingredients = 'yellow',
