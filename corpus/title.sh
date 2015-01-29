@@ -1,1 +1,1 @@
-for file in *; do echo $file >tempfile; cat $file >>tempfile; mv tempfile $file; done
+for file in *; do lua ../nom.lua $file>tempfile; cat $file >>tempfile; mv tempfile $file; done
