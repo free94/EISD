@@ -1,10 +1,10 @@
 require('quantite')
 require('structure')
 require('origine')
-require ('outil')
-require ('remarque')
-require ('difficulte')
-require ('prix')
+require('outil')
+require('remarque')
+require('difficulte')
+require('prix')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -45,8 +45,6 @@ for line in io.lines() do
 end
 ]]
 
-seq = main(io.read("*all"):gsub('%p', ' %1 '))
-print(seq:tostring(tags))
 
 function concatener(indices)
 	valeur = nil
@@ -60,15 +58,40 @@ function concatener(indices)
 	return valeur
 end
 
-recettes = {}
+local recettes = {}
 
-k,nom = pairs(seq["&nom"])
-recettes[nom] = {}
-recettes[nom].etapes = {}
-for k,v in pairs(seq["&etape"]) do
-	valeur = nil
-	valeur = concatener(v)
-	recettes[nom].etapes[#recettes[nom].etapes+1] = valeur
+
+local i, t, popen = 0, {}, io.popen
+local dir = "../corpus/sub/"
+for filename in popen('ls -a "'..dir..'"'):lines() do
+    i = i + 1
+    t[i] = filename
 end
 
+for k, file in pairs(t) do
+	if file ~= "." and file ~= ".." then
+		print(dir..file)
+		local f = assert(io.open(dir..file, "r"))
+		seq = main(f:read("*all"):gsub('%p', ' %1 '))
+		f:close()
+
+		print(seq:tostring(tags))
+		k,nomIndices = pairs(seq["&nom"])
+		nom = concatener(nomIndices[1])
+
+		recettes[nom] = {}
+		recettes[nom].etapes = {}
+		for k,v in pairs(seq["&etape"]) do
+			valeur = nil
+			valeur = concatener(v)
+			recettes[nom].etapes[#recettes[nom].etapes+1] = valeur
+		end
+	end
+end
 print(serialize(recettes))
+
+
+
+
+
+
