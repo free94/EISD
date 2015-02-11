@@ -16,24 +16,24 @@ main:add(remarque)
 main:add(difficulte)
 main:add(prix)
 -- tags a afficher
-tags = {
+tags = {--[[
 	etape             = 'red',
 	quantite          = 'green',
 	valeur            = 'green',
 	unite             = 'green',
 	temps_preparation = 'yellow',
-	temps_cuisson = 'yellow',
+	temps_cuisson = 'yellow',]]
+	ingredientRecette = 'magenta',
 	ingredients = 'yellow',
-	ingredient = 'magenta',
-	preparation = 'yellow',
-	manipulation = 'yellow',
+	ingredient = 'green',
+	--[[preparation = 'yellow',
 	extra = 'yellow',
 	origine  = 'magenta',
 	outil = 'cyan',
 	remarque='red',
 	difficulte='green',
 	prix ='blue',
-	nom = 'yellow',
+	nom = 'yellow',]]
 }
 
 -- affichage
@@ -46,9 +46,9 @@ end
 ]]
 
 
-function concatener(indices)
-	valeur = nil
-	for i = indices[1], indices[2], 1 do
+function concatener(i1, i2)
+	local valeur = nil
+	for i = i1, i2, 1 do
 		if valeur == nil then
 			valeur = seq[i].token
 		else
@@ -56,6 +56,28 @@ function concatener(indices)
 		end
 	end
 	return valeur
+end
+
+function getTagIn(wrap, tag)
+	local k, wrapResults = pairs(seq[wrap])
+	local k, tagResults = pairs(seq[tag])
+	results = {}
+	for k, tagIndices in pairs(tagResults) do
+		for k, wrapIndices in pairs(wrapResults) do
+			if(tagIndices[1]>=wrapIndices[1] and tagIndices[2]<=wrapIndices[2]) then
+				results[#results + 1] = concatener(tagIndices[1], tagIndices[2])
+			end
+		end
+	end
+	return results
+end
+
+function getTag(tag)
+	local results = {}
+	for k,indices in pairs(seq[tag]) do
+		results[#results + 1] = concatener(indices[1], indices[2])
+	end
+	return results
 end
 
 local recettes = {}
@@ -76,20 +98,31 @@ for k, file in pairs(t) do
 		f:close()
 
 		print(seq:tostring(tags))
-		k,nomIndices = pairs(seq["&nom"])
-		nom = concatener(nomIndices[1])
 
+		
+		nom = getTag("&nom")[1]
+		print(nom)
 		recettes[nom] = {}
-		recettes[nom].etapes = {}
-		for k,v in pairs(seq["&etape"]) do
-			valeur = nil
-			valeur = concatener(v)
-			recettes[nom].etapes[#recettes[nom].etapes+1] = valeur
-		end
+
+		recettes[nom].tempsPreparation = {}
+		recettes[nom].tempsPreparation.valeur = getTagIn("&temps_preparation", "&valeur")[1]
+		recettes[nom].tempsPreparation.unite = getTagIn("&temps_preparation", "&unite")[1]
+
+		recettes[nom].tempsCuisson = {}
+		recettes[nom].tempsCuisson.valeur = getTagIn("&temps_cuisson", "&valeur")[1]
+		recettes[nom].tempsCuisson.unite = getTagIn("&temps_cuisson", "&unite")[1]
+		
+		recettes[nom].etapes = getTagIn("&preparation", "&etape")
+
+		recettes[nom].ingredients = {}
+		recettes[nom].ingredients = getTagIn("&ingredients", "&NNC")
+		--print(serialize(recettes[nom].ingredients))
+
+
 	end
 end
-print(serialize(recettes))
 
+print(serialize(recettes))
 
 
 

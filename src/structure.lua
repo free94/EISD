@@ -15,26 +15,27 @@ structure:pattern([[
 	]])
 structure:pattern("[&extra Remarques /^:$/ .* ]")
 structure:pattern("&ingredients [&manipulation .*?] &extra")
+local function test(seq, pos)
+	if seq[pos].token == "toto" then
+		return true
+	end
+	return false
+end
+structure:pattern("[&ingredient '-' @test + ] ('Préparation' | '-') ")
 ]=]
 
-structure:pattern("[&ingredient /^-$/ /^[^P-].*$/+ ]") -- sale !
+structure:pattern("[&ingredient &NNC &ADJ? (de &NNC)? &ADJ? ]")
+structure:pattern("[&ingredientRecette '-' /^[^P-].*/+ ] ")
+structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ] ")
 
 structure:pattern([[
 		[&recette
-			(
 			[&nom .*?]
-			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
-			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
-			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ [&ingredient /^-$/ /^[^-]/+ ]*? ]
-			[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)*? ]
-			[&extra Remarques /^:$/ .* ]
-			) | (
-			[&nom .*?]
-			[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
-			[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
-			[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ .* ]
-			[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)* ]
-			)
+			[&temps_preparation Temps de "préparation" ":" &NUM . ]
+			[&temps_cuisson Temps de cuisson ":" &NUM . ]
+			[&ingredients "Ingrédients" "(" pour &NUM . ")" ":" .*? ]
+			[&preparation "Préparation" de la recette ":" .*? ]
+			([&extra Remarques ":" .* ] | $)
 		]
 	]])
 
