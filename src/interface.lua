@@ -133,7 +133,7 @@ for c,nomCritere in pairs(criteres) do
 	end
 end
 
-print(serialize( recettesOk))
+print(serialize(recettesOk))
 
 
 

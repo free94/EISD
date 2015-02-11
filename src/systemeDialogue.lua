@@ -22,7 +22,7 @@ function fusion(t1, t2)
 	return resultats
 end
 
-function chercheRecetteParCritere()
+function chercheRecetteParCritere(recettes)
 	resultats = {}
 	resultatsTemp = {}	
 	critere = { &cIngredient, &cDuree, &outil, &origine, &prix, &cPopularite, &cNom}
@@ -32,9 +32,9 @@ function chercheRecetteParCritere()
 		--si notre tag n'est pas nul et qu'il est bien demandé par l'utilisateur
 		if	v ~= nil then
 			--recherche dans notre table ce critere, parcours de toute la table recettes
-			for k2,v2 in pairs(seq["&recettes"]) do
+			for k2,v2 in pairs(recettes) do
 				--getTag renvoi la string contenue dans un tag
-				if string.gmatch(getTag(v2["&v"]), &critere) then 
+				if string.gmatch(k2["&k"], &critere) then 
 					--on a une recette contenant le critere courant recherche
 					if premierPassage == true then
 						resultats[#resultats+1] = nomRecette

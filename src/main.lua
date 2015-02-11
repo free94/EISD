@@ -134,8 +134,10 @@ for k, file in pairs(t) do
 
 	end
 end
-
-print(serialize(recettes))
+file = io.open("bd.txt", "w")
+io.output(file)
+io.write(serialize(recettes))
+io.close(file)
 
 
 
