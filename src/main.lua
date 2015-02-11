@@ -2,7 +2,6 @@ require('quantite')
 require('structure')
 require('origine')
 require('remarque')
-require('difficulte')
 require('prix')
 
 main = dark.pipeline()
@@ -11,7 +10,6 @@ main:add(quantite)
 main:add(structure)
 main:add(origine)
 main:add(remarque)
-main:add(difficulte)
 main:add(prix)
 -- tags a afficher
 tags = {--[[
@@ -29,7 +27,6 @@ tags = {--[[
 	origine  = 'magenta',
 	outil = 'cyan',
 	remarque='red',
-	difficulte='green',
 	prix ='blue',
 	nom = 'yellow',]]
 }
