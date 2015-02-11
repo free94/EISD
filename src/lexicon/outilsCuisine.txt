@@ -91,6 +91,7 @@ Hachoir
 Pétrin
 Canneleur
 Ciseaux de cuisine
+Coupe
 Coupe-frites
 Coupe-œuf
 Couteau
@@ -282,6 +283,7 @@ hachoir
 pétrin
 canneleur
 ciseaux de cuisine
+coupe
 coupe-frites
 coupe-œuf
 couteau
