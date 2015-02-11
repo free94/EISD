@@ -1,7 +1,6 @@
 require('quantite')
 require('structure')
 require('origine')
-require('remarque')
 require('prix')
 
 main = dark.pipeline()
@@ -9,12 +8,11 @@ main:model("model/postag-fr")
 main:add(quantite)
 main:add(structure)
 main:add(origine)
-main:add(remarque)
 main:add(prix)
 -- tags a afficher
 tags = {--[[
 	etape             = 'red',
-	quantite          = 'green',
+	quantite          = 'red',
 	valeur            = 'green',
 	unite             = 'green',
 	tempsPreparation = 'yellow',
@@ -29,6 +27,8 @@ tags = {--[[
 	remarque='red',
 	prix ='blue',
 	nom = 'yellow',]]
+	ingredientsListe = 'blue',
+	remarque = 'red'
 }
 
 -- affichage
@@ -110,7 +110,7 @@ for k, file in pairs(t) do
 		recettes[nom].etapes = getTagIn("&preparation", "&etape")
 
 		recettes[nom].ingredients = {}
-		recettes[nom].ingredients = getTagIn("&ingredients", "&NNC")
+		recettes[nom].ingredients = getTagIn("&ingredientsListe", "&ingredientRecette")
 
 		recettes[nom].quantite = {}
 		recettes[nom].quantite.valeur = getTagIn("&quantite", "&valeur")[1]
@@ -122,7 +122,7 @@ for k, file in pairs(t) do
 
 		recettes[nom].popularite = #getTag("&avis")
 
-		recettes[nom].remarques = getTag("&extra")[1]
+		recettes[nom].remarques = getTag("&remarque")[1]
 
 		recettes[nom].avis = getTag("&avis")
 
@@ -130,7 +130,6 @@ for k, file in pairs(t) do
 
 		recettes[nom].outils = getTag("&outil")
 		--print(serialize(recettes[nom].ingredients))
-
 
 	end
 end

@@ -3,7 +3,6 @@ require('structure')
 require('origine')
 require('outil')
 require('remarque')
-require('difficulte')
 require('prix')
 require('question')
 
@@ -14,7 +13,6 @@ main:add(structure)
 main:add(origine)
 main:add(outil)
 main:add(remarque)
-main:add(difficulte)
 main:add(prix)
 main:add(question)
 -- tags a afficher
@@ -33,22 +31,11 @@ tags = {--[[
 	origine  = 'magenta',
 	outil = 'cyan',
 	remarque='red',
-	difficulte='green',
 	prix ='blue',
 	nom = 'yellow',]]
 	critere = 'yellow',
 	qRecette = 'cyan',
 }
-
--- affichage
---[[
-for line in io.lines() do
-  seq = main(line:gsub('%p', ' %1 '))
-  print(seq:tostring(tags))
-  --seq:dump()
-end
-]]
-
 
 function concatener(i1, i2)
 	local valeur = nil
@@ -116,7 +103,12 @@ function deepcopy(orig)
     return copy
 end
 
-local recettes = {}
+local file = io.open("bd.txt", "r")
+io.input(file)
+local recettes = io.read("*all")
+io.close(file)
+
+print(serialize(recettes))
 
 local args = {...}
 local laQuestion = args[1]
