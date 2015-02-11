@@ -8,8 +8,8 @@ structure = dark.pipeline()
 
 --[=[
 structure:pattern([[
-		[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ]
-		[&temps_cuisson Temps de cuisson /^:$/ &NUM . ]
+		[&tempsPreparation Temps de /^préparation*/ /^:$/ &NUM . ]
+		[&tempsCuisson Temps de cuisson /^:$/ &NUM . ]
 		[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ .*? ]
 		[&preparation /^Préparation$/ de la recette /^:$/ .* ]
 	]])
@@ -31,8 +31,8 @@ structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ] ")
 structure:pattern([[
 		[&recette
 			[&nom .*?]
-			[&temps_preparation Temps de "préparation" ":" &NUM . ]
-			[&temps_cuisson Temps de cuisson ":" &NUM . ]
+			[&tempsPreparation Temps de "préparation" ":" &NUM . ]
+			[&tempsCuisson Temps de cuisson ":" &NUM . ]
 			[&ingredients "Ingrédients" "(" pour &NUM . ")" ":" .*? ]
 			[&preparation "Préparation" de la recette ":" .*? ]
 			([&extra Remarques ":" .* ] | $)
@@ -45,6 +45,6 @@ structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ]")
 structure:pattern("[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)*? ]")
 structure:pattern("[&ingredient /^-$/ /^[^-]/+ /^!Préparation$/ ] (&ingredient | &preparation) ")
 structure:pattern("[&ingredients /^Ingrédient/ /^%($/ pour &NUM . /^%)$/ /^:$/ &ingredient*] &preparation")
-structure:pattern("[&temps_cuisson Temps de cuisson /^:$/ &NUM . ] &ingredients")
-structure:pattern("[&temps_preparation Temps de /^préparation*/ /^:$/ &NUM . ] &temps_cuisson")
-structure:pattern("[&nom .*?] &temps_preparation ")]]
+structure:pattern("[&tempsCuisson Temps de cuisson /^:$/ &NUM . ] &ingredients")
+structure:pattern("[&tempsPreparation Temps de /^préparation*/ /^:$/ &NUM . ] &tempsCuisson")
+structure:pattern("[&nom .*?] &tempsPreparation ")]]

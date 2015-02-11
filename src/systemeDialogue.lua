@@ -1,8 +1,12 @@
 --modifier pour que ça puisse chercher en profondeur peu importe le nombre de sous tables contenues dans la table
 function contains(t, v)
 	for k,v1 in pairs(t) do
-		if v1 == v then
-			return true
+		if type(v1) == "table" then 
+			contains(v1,v)
+		else
+			if v1 == v then
+				return true
+			end
 		end
 	end
 	return false
@@ -21,6 +25,8 @@ end
 function chercheRecetteParCritere()
 	resultats = {}
 	resultatsTemp = {}	
+	critere = { &cIngredient, &cDuree, &outil, &origine, &prix, &cPopularite, &cNom}
+	premierPassage = true
 	--pour tous les criteres
 	for k,v in pairs(seq["&critere"]) do
 		--si notre tag n'est pas nul et qu'il est bien demandé par l'utilisateur
@@ -33,16 +39,21 @@ function chercheRecetteParCritere()
 					if premierPassage == true then
 						resultats[#resultats+1] = nomRecette
 					else
-						resultatsTemp[#resultatsTemp+1] = nomRecette
+						if contains(resultats, nomRecette) then
+							resultatsTemp[#resultatsTemp+1] = nomRecette
+						end
 						--fusion des deux tables pour ne garder que les recettes contenant l'ensemble des criteres
-						resultats = fusion(resultatsTemp, resultats)
+						--resultats = fusion(resultatsTemp, resultats)
 					end				
 				end
 				
 			end
 							
 		end
+		premierPassage = false
 	end
 	--resultats contient ici l'ensemble des recettes disposant de tous les critères demandés par l'utilisateur
 	return resultats
 end
+
+print("test")

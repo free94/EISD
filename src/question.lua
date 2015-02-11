@@ -1,20 +1,20 @@
-questions = dark.pipeline()
-questions:lexicon("&cIngredient", "lexicon/ingredients.txt")
-questions:lexicon("&outils", "lexicon/outilsCuisine.txt")
+question = dark.pipeline()
+--question:lexicon("&cIngredient", "lexicon/ingredients.txt")
+question:lexicon("&outil", "lexicon/outilsCuisine.txt")
 
-questions:pattern([[
+question:pattern([[
+	[&critere 
+		&cIngredient | &cDuree | &outil | &origine | &prix | &cPopularite | &cNom
+	]
+]])
+
+question:pattern([[
 	[&qRecette 
-		.* "recette" .* &critere*? .* | &critere*? .* "recette" .*
+		.* /^[Rr]ecette/ .* &critere*? .* | &critere*? .* /^[Rr]ecette/ .*
 	]
 ]])
 
 --&prix : même pattern pour l'analyse des questions ou du texte, on réutilise le pattern prix existant
 --&origine : pareil =)
 --&outil : même combat
-questions:pattern([[
-	[&critere 
-		&cIngredient | &cDuree | &outil | &origine | &prix | &cPopularite | &cNom
-	]
-]])
 
-critere = { &cIngredient, &cDuree, &outil, &origine, &prix, &cPopularite, &cNom}

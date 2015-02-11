@@ -1,7 +1,6 @@
 require('quantite')
 require('structure')
 require('origine')
-require('outil')
 require('remarque')
 require('difficulte')
 require('prix')
@@ -11,7 +10,6 @@ main:model("model/postag-fr")
 main:add(quantite)
 main:add(structure)
 main:add(origine)
-main:add(outil)
 main:add(remarque)
 main:add(difficulte)
 main:add(prix)
@@ -21,8 +19,8 @@ tags = {--[[
 	quantite          = 'green',
 	valeur            = 'green',
 	unite             = 'green',
-	temps_preparation = 'yellow',
-	temps_cuisson = 'yellow',]]
+	tempsPreparation = 'yellow',
+	tempsCuisson = 'yellow',]]
 	ingredientRecette = 'magenta',
 	ingredients = 'yellow',
 	ingredient = 'green',
@@ -105,17 +103,35 @@ for k, file in pairs(t) do
 		recettes[nom] = {}
 
 		recettes[nom].tempsPreparation = {}
-		recettes[nom].tempsPreparation.valeur = getTagIn("&temps_preparation", "&valeur")[1]
-		recettes[nom].tempsPreparation.unite = getTagIn("&temps_preparation", "&unite")[1]
+		recettes[nom].tempsPreparation.valeur = getTagIn("&tempsPreparation", "&valeur")[1]
+		recettes[nom].tempsPreparation.unite = getTagIn("&tempsPreparation", "&unite")[1]
 
 		recettes[nom].tempsCuisson = {}
-		recettes[nom].tempsCuisson.valeur = getTagIn("&temps_cuisson", "&valeur")[1]
-		recettes[nom].tempsCuisson.unite = getTagIn("&temps_cuisson", "&unite")[1]
+		recettes[nom].tempsCuisson.valeur = getTagIn("&tempsCuisson", "&valeur")[1]
+		recettes[nom].tempsCuisson.unite = getTagIn("&tempsCuisson", "&unite")[1]
 		
 		recettes[nom].etapes = getTagIn("&preparation", "&etape")
 
 		recettes[nom].ingredients = {}
 		recettes[nom].ingredients = getTagIn("&ingredients", "&NNC")
+
+		recettes[nom].quantite = {}
+		recettes[nom].quantite.valeur = getTagIn("&quantite", "&valeur")[1]
+		recettes[nom].quantite.unite = getTagIn("&quantite", "&unite")[1]
+
+		recettes[nom].difficulte = {}
+
+		recettes[nom].origine = getTag("&origine")[1]
+
+		recettes[nom].popularite = #getTag("&avis")
+
+		recettes[nom].remarques = getTag("&extra")[1]
+
+		recettes[nom].avis = getTag("&avis")
+
+		recettes[nom].prix = getTag("&prix")
+
+		recettes[nom].outils = getTag("&outil")
 		--print(serialize(recettes[nom].ingredients))
 
 
