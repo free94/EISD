@@ -2,7 +2,6 @@ require('quantite')
 require('structure')
 require('origine')
 require('outil')
-require('remarque')
 require('prix')
 require('question')
 
@@ -12,30 +11,25 @@ main:add(quantite)
 main:add(structure)
 main:add(origine)
 main:add(outil)
-main:add(remarque)
 main:add(prix)
 main:add(question)
--- tags a afficher
-tags = {--[[
-	etape             = 'red',
-	quantite          = 'green',
-	valeur            = 'green',
-	unite             = 'green',
-	temps_preparation = 'yellow',
-	temps_cuisson = 'yellow',
-	ingredientRecette = 'magenta',
-	ingredients = 'yellow',
-	ingredient = 'green',
-	preparation = 'yellow',
-	extra = 'yellow',
-	origine  = 'magenta',
-	outil = 'cyan',
-	remarque='red',
-	prix ='blue',
-	nom = 'yellow',]]
+
+tags = {
 	critere = 'yellow',
 	qRecette = 'cyan',
 }
+
+criteres = {
+	duree = "",--[[
+	outils = "&outil",
+	ingredients = "&ingredient",
+	origine = "&origine",
+	prix = "&prix",
+	popularite = "&popularite",
+	nom = "&nom",]]
+}
+
+dofile("tableRecettes.lua")
 
 function concatener(i1, i2)
 	local valeur = nil
@@ -65,16 +59,30 @@ end
 
 function getTag(tag)
 	local results = {}
-	for k,indices in pairs(seq[tag]) do
-		results[#results + 1] = concatener(indices[1], indices[2])
+	if tag ~= "" then
+		for k,indices in pairs(seq[tag]) do
+			results[#results + 1] = concatener(indices[1], indices[2])
+		end
 	end
 	return results
 end
 
+function toMinutes(valeur, unite)
+	if string.find(unite:lower(), "h") then
+		return valeur * 60
+	else
+		return valeur
+	end
+end
+
 function satisfaitCritere(recettes, nomCritere, valeurCritere)
 	for recette,infos in pairs(recettes) do
-		if not contains(infos[nomCritere], valeurCritere) then
-			table.remove(recette)
+		if nomCritere == "nom" and recette ~= valeurCritere then
+			recettes.remove(recette)
+		elseif nomCritere == "duree" and toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) > tonumber(valeurCritere) then
+			recettes.remove(recette)
+		elseif not contains(infos[nomCritere], valeurCritere) then
+			recettes.remove(infos)
 		end
 	end
 	return recettes
@@ -103,29 +111,54 @@ function deepcopy(orig)
     return copy
 end
 
-local file = io.open("bd.txt", "r")
-io.input(file)
-local recettes = io.read("*all")
-io.close(file)
+function contains(t, v)
+	for k,v1 in pairs(t) do
+		if type(v1) == "table" then 
+			contains(v1,v)
+		else
+			if v1 == v then
+				return true
+			end
+		end
+	end
+	return false
+end
 
-print(serialize(recettes))
+
+
+
+
+
+
+
+
 
 local args = {...}
 local laQuestion = args[1]
+--laQuestion = "Quelles recettes utilisent un four ?"
 
 seq = main(laQuestion:gsub('%p', ' %1 '))
 print(seq:tostring(tags))
-
-criteres = { "&ingredient", "&duree", "&outil", "&origine", "&prix", "&popularite", "&nom"}
 recettesOk = deepcopy(recettes)
-for c,nomCritere in pairs(criteres) do
-	tags = getTag(nomCritere)
+for nomCritere,tagCritere in pairs(criteres) do
+	tags = getTag(tagCritere)
 	for k,valeurCritere in pairs(tags) do
 		recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
 	end
 end
 
-print(serialize(recettesOk))
+for recette, infos in pairs(recettesOk) do
+	print(recette)
+end
+
+
+
+
+
+
+
+
+
 
 
 

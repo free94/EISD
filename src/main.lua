@@ -100,11 +100,11 @@ for k, file in pairs(t) do
 		recettes[nom] = {}
 
 		recettes[nom].tempsPreparation = {}
-		recettes[nom].tempsPreparation.valeur = getTagIn("&tempsPreparation", "&valeur")[1]
+		recettes[nom].tempsPreparation.valeur = tonumber(getTagIn("&tempsPreparation", "&valeur")[1])
 		recettes[nom].tempsPreparation.unite = getTagIn("&tempsPreparation", "&unite")[1]
 
 		recettes[nom].tempsCuisson = {}
-		recettes[nom].tempsCuisson.valeur = getTagIn("&tempsCuisson", "&valeur")[1]
+		recettes[nom].tempsCuisson.valeur = tonumber(getTagIn("&tempsCuisson", "&valeur")[1])
 		recettes[nom].tempsCuisson.unite = getTagIn("&tempsCuisson", "&unite")[1]
 		
 		recettes[nom].etapes = getTagIn("&preparation", "&etape")
@@ -133,9 +133,9 @@ for k, file in pairs(t) do
 
 	end
 end
-file = io.open("bd.txt", "w")
+file = io.open("tableRecettes.lua", "w")
 io.output(file)
-io.write(serialize(recettes))
+io.write("recettes = "..serialize(recettes))
 io.close(file)
 
 
