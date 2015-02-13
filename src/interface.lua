@@ -77,7 +77,9 @@ end
 
 function satisfaitCritere(recettes, nomCritere, valeurCritere)
 	for recette,infos in pairs(recettes) do
-		if nomCritere == "nom" and recette ~= valeurCritere then
+		if nomCritere == "prix" then
+			--appliquer pattern prix sur valeurCritere
+		elseif nomCritere == "nom" and recette ~= valeurCritere then
 			recettes[recette] = nil
 		elseif nomCritere == "duree" and toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) > tonumber(valeurCritere) then
 			recettes[recette] = nil
@@ -134,11 +136,6 @@ function resultat(recettesOk)
 	end
 end
 
-
-
-
-
-
 local args = {...}
 local laQuestion = args[1]
 --laQuestion = "Quelles recettes utilisent un four ?"
@@ -152,10 +149,10 @@ for nomCritere,tagCritere in pairs(criteres) do
 		--print(serialize(tags))
 		for k,valeurCritere in pairs(tags) do
 			recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
-			resultat(recettesOk)
 		end
 	end
 end
+resultat(recettesOk)
 
 
 

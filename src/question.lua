@@ -1,6 +1,9 @@
 question = dark.pipeline()
 --question:lexicon("&cIngredient", "lexicon/ingredients.txt")
-question:lexicon("&outil", "lexicon/outilsCuisine.txt")
+
+question:pattern([[
+	[&cIngredient]
+	]])
 
 question:pattern([[
 	[&critere 
