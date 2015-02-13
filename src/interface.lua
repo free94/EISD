@@ -20,13 +20,13 @@ tags = {
 }
 
 criteres = {
-	duree = "",--[[
+	duree = "",
 	outils = "&outil",
-	ingredients = "&ingredient",
+	ingredients = "&ingredientRecette",
 	origine = "&origine",
 	prix = "&prix",
 	popularite = "&popularite",
-	nom = "&nom",]]
+	nom = "&nom",
 }
 
 dofile("tableRecettes.lua")
@@ -78,11 +78,11 @@ end
 function satisfaitCritere(recettes, nomCritere, valeurCritere)
 	for recette,infos in pairs(recettes) do
 		if nomCritere == "nom" and recette ~= valeurCritere then
-			recettes.remove(recette)
+			recettes[recette] = nil
 		elseif nomCritere == "duree" and toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) > tonumber(valeurCritere) then
-			recettes.remove(recette)
+			recettes[recette] = nil
 		elseif not contains(infos[nomCritere], valeurCritere) then
-			recettes.remove(infos)
+			recettes[recette] = nil
 		end
 	end
 	return recettes
@@ -127,6 +127,12 @@ end
 
 
 
+function resultat(recettesOk)
+	--print("res")
+	for recette, infos in pairs(recettesOk) do
+	print(recette)
+	end
+end
 
 
 
@@ -141,15 +147,16 @@ seq = main(laQuestion:gsub('%p', ' %1 '))
 print(seq:tostring(tags))
 recettesOk = deepcopy(recettes)
 for nomCritere,tagCritere in pairs(criteres) do
-	tags = getTag(tagCritere)
-	for k,valeurCritere in pairs(tags) do
-		recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
+	if nomCritere ~= nil then
+		tags = getTag(tagCritere) 
+		--print(serialize(tags))
+		for k,valeurCritere in pairs(tags) do
+			recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
+			resultat(recettesOk)
+		end
 	end
 end
 
-for recette, infos in pairs(recettesOk) do
-	print(recette)
-end
 
 
 

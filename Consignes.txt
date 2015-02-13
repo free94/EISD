@@ -1,3 +1,27 @@
+-------------
+SOUTENANCES
+
+10 min présentation
+partie extraction : quelles sont les infos extraites, la structures des données
+quelles sont les Q auxquelles on répond
+quel est l'aspect dialogue ?
+
+5MIN démonstration système
+
+PUIS deux semaines supplémentaires avant le rendu final, il faudra tenir compte des remarques pour up le système qui devra cette fois gérer l'ensemble des questions
+
+-------------
+RAPPORT : FORMAT PDF
+
+présentation globale du projet
+extraction
+dialogue
+exemples 
+exemples questions
+Code (propre et commenté)
+
++README comment lancer etc
+
 REMARQUES :
 
 Pensez à supprimer les fichiers vides !
