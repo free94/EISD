@@ -1,6 +1,6 @@
 require('math')
 question = dark.pipeline()
---question:lexicon("&cIngredient", "lexicon/ingredients.txt")
+question:lexicon("&aliment", "lexicon/aliments.txt")
 
 function tagNomRecette(seq)
 	for nomRecette, infos in pairs(recettes) do
@@ -19,12 +19,13 @@ end
 	Quels plats contiennent du sucre et du beurre ?
 	J'ai du sucre et du beurre, que puis-je faire ?
 	Quelle recette dure moins de 3 minutes ?
-	Quelle recette puis-je faire avec un four ?
+	Quelle recette puis-je faire avec un four ou une poêle ?
 	Que faire en moins de 3 minutes ?
 	Que préparer avec des pommes et des tomates ?
+	etc.
 ]]
 
-question:pattern('[&ET "et"]')
+question:pattern('[&ET "et" | "ni" ]')
 question:pattern('[&OU "ou"]')
 question:pattern('[&AVEC "avec"]')
 question:pattern('[&SANS "sans"]')
@@ -32,9 +33,9 @@ question:pattern('[&synonymesCuisiner "faire" | /^pr[ée]parer$/ | "cuisiner" | 
 
 
 question:pattern('[&cDuree [&valeur &NUM] [&unite ( "h" | /^heure/ | /^min/ )] ]')
-question:pattern('[&cIngredients &avecOuSans? .* (&nomIngredient .*)+]') --il faudra creer &nomIngredient avec un lexique d'ingrédients
+question:pattern('[&cIngredients (&aliment .*)+]')
 question:pattern('[&cOutils (&outil .*)+]')
-question:pattern('[&critere cIngredients | &cDuree | &cOutils | &origine | &prix | cPopularite ]')
+question:pattern('[&critere &cDuree | &cOutils | &cIngredients | &origine | &prix | cPopularite ]')
 question:pattern([[
 	[&qListeRecettes 
 		.* ( &synonymesCuisiner | "recettes" | /^plat/ | /^dessert/ | /^entr[ée]e/ ) .* &critere .*

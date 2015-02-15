@@ -1,3 +1,4 @@
+
 function concatener(seq, i1, i2)
 	local valeur = nil
 	if i1 == i2 then return seq[i1].token end
@@ -14,7 +15,7 @@ end
 function getTagIn(wrap, tag)
 	local k, wrapResults = pairs(seq[wrap])
 	local k, tagResults = pairs(seq[tag])
-	results = {}
+	local results = {}
 	for k, tagIndices in pairs(tagResults) do
 		for k, wrapIndices in pairs(wrapResults) do
 			if(tagIndices[1]>=wrapIndices[1] and tagIndices[2]<=wrapIndices[2]) then
@@ -60,12 +61,9 @@ end
 
 function contains(t, v)
 	for k,v1 in pairs(t) do
-		if type(v1) == "table" then 
-			contains(v1,v)
-		else
-			if v1 == v then
-				return true
-			end
+		if k == v then return true
+		elseif type(v1) == "table" then contains(v1,v)
+		elseif v1 == v then return true
 		end
 	end
 	return false

@@ -8,6 +8,7 @@ require('outil')
 
 main = dark.pipeline()
 main:model("model/postag-fr")
+main:lexicon("&aliment", "lexicon/aliments.txt")
 main:add(quantite)
 main:add(structure)
 main:add(origine)
@@ -83,6 +84,35 @@ for k, file in pairs(t) do
 
 		recettes[nom].ingredients = {}
 		recettes[nom].ingredients = getTagIn("&ingredientsListe", "&ingredientRecette")
+
+		recettes[nom].aliments = {}
+
+		local k, ingredientResults = pairs(seq["&ingredientRecette"])
+		local k, valeurResults = pairs(seq["&valeur"])
+		local k, uniteResults = pairs(seq["&unite"])
+		local k, alimentResults = pairs(seq["&aliment"])
+		for k, ingredientIndices in pairs(ingredientResults) do
+			local aliment = ""
+			for k, alimentIndices in pairs(alimentResults) do
+				if(alimentIndices[1]>=ingredientIndices[1] and alimentIndices[2]<=ingredientIndices[2]) then
+					aliment = concatener(seq, alimentIndices[1], alimentIndices[2])
+					break
+				end
+			end
+			if aliment ~= "" then
+				recettes[nom].aliments[aliment] = {}
+				for k, valeurIndices in pairs(valeurResults) do
+					if(valeurIndices[1]>=ingredientIndices[1] and valeurIndices[2]<=ingredientIndices[2]) then
+						recettes[nom].aliments[aliment].quantite = concatener(seq, valeurIndices[1], valeurIndices[2])
+					end
+				end
+				for k, uniteIndices in pairs(uniteResults) do
+					if(uniteIndices[1]>=ingredientIndices[1] and uniteIndices[2]<=ingredientIndices[2]) then
+						recettes[nom].aliments[aliment].unite = concatener(seq, uniteIndices[1], uniteIndices[2])
+					end
+				end
+			end
+		end
 
 		recettes[nom].quantite = {}
 		recettes[nom].quantite.valeur = getTagIn("&quantite", "&valeur")[1]

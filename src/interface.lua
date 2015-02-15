@@ -20,17 +20,8 @@ tags = {
 	critere = 'yellow',
 	qListeRecettes = 'cyan',
 	qRecette = 'cyan',
-	outil = 'red'
-}
-
-criteres = {
-	duree = "",
-	outils = "&outil",
-	ingredients = "&ingredientRecette",
-	origine = "&origine",
-	prix = "&prix",
-	popularite = "&popularite",
-	nom = "&nom",
+	aliment = 'red',
+	cIngredients = 'green'
 }
 
 dofile("tableRecettes.lua")
@@ -128,12 +119,73 @@ if containsTag("&qListeRecettes") then
 		end
 	end
 
+	if containsTag("&cIngredients") then
+		local sans = containsTag("&SANS")
+		local ou = containsTagIn("&cIngredients", "&OU")
+		local aliments = {}
 
+		if sans then
+			local recettesOk = deepcopy(recettes)
+			for nomRecette, infos in pairs(recettes) do
+				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
+					addToSet(aliments, o)
+					if contains(recettesOk[nomRecette].aliments, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire sans "..stringliste(aliments, "et").." :")
+			resultat(recettesOk)
+		elseif ou then
+			local recettesOk = {}
+			for nomRecette, infos in pairs(recettes) do
+				local garder = false
+				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do
+					addToSet(aliments, o)	
+					if contains(recettes[nomRecette].aliments, o) then
+						garder = true
+						break
+					end
+				end
+				if garder then
+					recettesOk[nomRecette] = infos
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(aliments, "ou").." :")
+			resultat(recettesOk)
+		else -- "avec" et "et"
+			local recettesOk = deepcopy(recettes)
+			for nomRecette, infos in pairs(recettes) do
+				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
+					addToSet(aliments, o)
+					if not contains(recettesOk[nomRecette].aliments, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(aliments, "et").." :")
+			resultat(recettesOk)
+		end
+	end
 end
 
 
 
 --[[
+
+criteres = {
+	duree = "",
+	outils = "&outil",
+	ingredients = "&ingredientRecette",
+	origine = "&origine",
+	prix = "&prix",
+	popularite = "&popularite",
+	nom = "&nom",
+}
+
+
 function satisfaitCritere(recettes, nomCritere, valeurCritere)
 	for recette,infos in pairs(recettes) do
 		if nomCritere == "prix" then
