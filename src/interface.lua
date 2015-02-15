@@ -15,72 +15,100 @@ main:add(outil)
 main:add(prix)
 main:add(question)
 
+
 tags = {
 	critere = 'yellow',
+	qListeRecettes = 'cyan',
 	qRecette = 'cyan',
+	cDuree = 'red'
 }
 
 criteres = {
-	duree = "",--[[
+	duree = "",
 	outils = "&outil",
-	ingredients = "&ingredient",
+	ingredients = "&ingredientRecette",
 	origine = "&origine",
 	prix = "&prix",
 	popularite = "&popularite",
-	nom = "&nom",]]
+	nom = "&nom",
 }
 
 dofile("tableRecettes.lua")
 
-function toMinutes(valeur, unite)
-	if string.find(unite:lower(), "h") then
-		return valeur * 60
-	else
-		return valeur
+local args = {...}
+local laQuestion = args[1]
+
+seq = main(laQuestion:gsub('%p', ' %1 '))
+print(seq:tostring(tags))
+
+if containsTag("&qRecette") and containsTag("&cNom") then
+	local question = getTag("&qRecette")[1]
+	for nomRecette, infos in pairs(recettes) do
+		if levenshtein(nomRecette, question, 0.15) then
+			print(recettes[nomRecette].enonce)
+		end
 	end
 end
 
+if containsTag("&qListeRecettes") then
+	if containsTag("&cDuree") then
+		local recettesOk = {}
+		local dureeMax = toMinutes(getTagIn("&cDuree","&valeur")[1],getTagIn("&cDuree","&unite")[1])
+		print("Voilà ce qu'il est possible de préparer en moins de "..getTag("&cDuree")[1].." :")
+		for nomRecette, infos in pairs(recettes) do
+			if toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) <= dureeMax then
+				print("- "..nomRecette)
+			end
+		end
+	end
+	if containsTag("&cOutils") then
+		local sans = containsTag("&SANS")
+		local ou = containsTag("&OU")
+		--TODO
+	end
+
+
+end
+
+
+
+--[[
 function satisfaitCritere(recettes, nomCritere, valeurCritere)
 	for recette,infos in pairs(recettes) do
-		if nomCritere == "nom" and recette ~= valeurCritere then
-			recettes.remove(recette)
+		if nomCritere == "prix" then
+			--appliquer pattern prix sur valeurCritere
+		elseif nomCritere == "nom" and recette ~= valeurCritere then
+			recettes[recette] = nil
 		elseif nomCritere == "duree" and toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) > tonumber(valeurCritere) then
-			recettes.remove(recette)
+			recettes[recette] = nil
 		elseif not contains(infos[nomCritere], valeurCritere) then
-			recettes.remove(infos)
+			recettes[recette] = nil
 		end
 	end
 	return recettes
 end
 
 
-
-
-
-local args = {...}
-local laQuestion = args[1]
---laQuestion = "Quelles recettes utilisent un four ?"
-
-seq = main(laQuestion:gsub('%p', ' %1 '))
-print(seq:tostring(tags))
-recettesOk = deepcopy(recettes)
-for nomCritere,tagCritere in pairs(criteres) do
-	print(tagCritere)
-	tags = getTag(tagCritere)
-	for k,valeurCritere in pairs(tags) do
-		recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
+function resultat(recettesOk)
+	for recette, infos in pairs(recettesOk) do
+		print(recette)
 	end
-end
-
-for recette, infos in pairs(recettesOk) do
-	print(recette)
-end
+end]]
 
 
-
-
-
-
+	--[[recettesOk = deepcopy(recettes)
+	for nomCritere,tagCritere in pairs(criteres) do
+		if nomCritere ~= nil then
+			tags = getTag(tagCritere)
+			--print(serialize(tags))
+			for k,valeurCritere in pairs(tags) do
+				recettesOk = satisfaitCritere(recettesOk, nomCritere, valeurCritere)
+			end
+		end
+	end
+	resultat(recettesOk)
+	print("Vous pouvez préparer les recettes suivantes : ")
+	resultat(recettesOk)]]
 
 
 
@@ -155,6 +183,3 @@ end
 print(serialize(recettes))
 
 ]]
-
-
-

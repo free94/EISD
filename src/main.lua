@@ -3,6 +3,7 @@ require('quantite')
 require('structure')
 require('origine')
 require('prix')
+require('outil')
 
 
 main = dark.pipeline()
@@ -11,6 +12,7 @@ main:add(quantite)
 main:add(structure)
 main:add(origine)
 main:add(prix)
+main:add(outil)
 -- tags a afficher
 tags = {--[[
 	etape             = 'red',
@@ -24,9 +26,9 @@ tags = {--[[
 	ingredient = 'green',
 	--[[preparation = 'yellow',
 	extra = 'yellow',
-	origine  = 'magenta',
+	origine  = 'magenta',]]
 	outil = 'cyan',
-	remarque='red',
+	--[[remarque='red',
 	prix ='blue',
 	nom = 'yellow',]]
 	ingredientsListe = 'blue',
@@ -56,7 +58,8 @@ for k, file in pairs(t) do
 	if file ~= "." and file ~= ".." then
 		print(dir..file)
 		local f = assert(io.open(dir..file, "r"))
-		seq = main(f:read("*all"):gsub('%p', ' %1 '))
+		local recetteTxt = f:read("*all")
+		seq = main(recetteTxt:gsub('%p', ' %1 '))
 		f:close()
 
 		print(seq:tostring(tags))
@@ -65,6 +68,8 @@ for k, file in pairs(t) do
 		nom = getTag("&nom")[1]
 		print(nom)
 		recettes[nom] = {}
+
+		recettes[nom].enonce = recetteTxt
 
 		recettes[nom].tempsPreparation = {}
 		recettes[nom].tempsPreparation.valeur = tonumber(getTagIn("&tempsPreparation", "&valeur")[1])
@@ -103,13 +108,6 @@ end
 file = io.open("tableRecettes.lua", "w")
 io.output(file)
 io.write("recettes = "..serialize(recettes))
-io.close(file)
-
-file = io.open("lexicon/nomsRecettes.txt", "w")
-io.output(file)
-for nomsRecettes, v in pairs(recettes) do
-	io.write(nomsRecettes.."\n")
-end
 io.close(file)
 
 
