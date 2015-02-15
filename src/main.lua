@@ -100,7 +100,12 @@ for k, file in pairs(t) do
 
 		recettes[nom].prix = getTag("&prix")
 
-		recettes[nom].outils = getTag("&outil")
+		recettes[nom].outils = {}
+		for k,o in pairs(getTag("&outil")) do
+			if not contains(recettes[nom].outils, o) then
+				recettes[nom].outils[#recettes[nom].outils + 1] = o
+			end
+		end
 		--print(serialize(recettes[nom].ingredients))
 
 	end

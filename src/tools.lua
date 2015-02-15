@@ -101,6 +101,10 @@ function containsTag(tag)
 	return not empty(getTag(tag))
 end
 
+function containsTagIn(dans, chercher)
+	return not empty(getTagIn(dans, chercher))
+end
+
 
 function toMinutes(valeur, unite)
 	if string.find(unite:lower(), "h") then
@@ -109,3 +113,11 @@ function toMinutes(valeur, unite)
 		return tonumber(valeur)
 	end
 end
+
+function addToSet(set, value)
+	if not contains(set, value) then
+		set[#set + 1] = value
+		return true
+	end
+	return false
+end	

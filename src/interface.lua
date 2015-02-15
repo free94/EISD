@@ -20,7 +20,7 @@ tags = {
 	critere = 'yellow',
 	qListeRecettes = 'cyan',
 	qRecette = 'cyan',
-	cDuree = 'red'
+	outil = 'red'
 }
 
 criteres = {
@@ -50,6 +50,22 @@ if containsTag("&qRecette") and containsTag("&cNom") then
 	end
 end
 
+function resultat(recettesOk)
+	for recette, infos in pairs(recettesOk) do
+		print("- "..recette)
+	end
+end
+
+function stringliste(liste, conjonction)
+	local res = liste[1]
+	for i=2,#liste do
+		if i == #liste then res = res.." "..conjonction.." "..liste[i]
+		else res = res..", "..liste[i]
+		end
+	end
+	return res
+end
+
 if containsTag("&qListeRecettes") then
 	if containsTag("&cDuree") then
 		local recettesOk = {}
@@ -63,8 +79,53 @@ if containsTag("&qListeRecettes") then
 	end
 	if containsTag("&cOutils") then
 		local sans = containsTag("&SANS")
-		local ou = containsTag("&OU")
-		--TODO
+		local ou = containsTagIn("&cOutils", "&OU")
+		local instruments = {}
+
+		if sans then
+			local recettesOk = deepcopy(recettes)
+			for nomRecette, infos in pairs(recettes) do
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
+					addToSet(instruments, o)
+					if contains(recettesOk[nomRecette].outils, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire sans "..stringliste(instruments, "et").." :")
+			resultat(recettesOk)
+		elseif ou then
+			local recettesOk = {}
+			for nomRecette, infos in pairs(recettes) do
+				local garder = false
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do
+					addToSet(instruments, o)	
+					if contains(recettes[nomRecette].outils, o) then
+						garder = true
+						break
+					end
+				end
+				if garder then
+					recettesOk[nomRecette] = infos
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "ou").." :")
+			resultat(recettesOk)
+		else -- "avec" et "et"
+			local recettesOk = deepcopy(recettes)
+			for nomRecette, infos in pairs(recettes) do
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
+					addToSet(instruments, o)
+					if not contains(recettesOk[nomRecette].outils, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "et").." :")
+			resultat(recettesOk)
+		end
 	end
 
 
@@ -89,11 +150,7 @@ function satisfaitCritere(recettes, nomCritere, valeurCritere)
 end
 
 
-function resultat(recettesOk)
-	for recette, infos in pairs(recettesOk) do
-		print(recette)
-	end
-end]]
+]]
 
 
 	--[[recettesOk = deepcopy(recettes)
