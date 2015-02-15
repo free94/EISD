@@ -1,7 +1,9 @@
+require('tools')
 require('quantite')
 require('structure')
 require('origine')
 require('prix')
+
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -39,41 +41,6 @@ for line in io.lines() do
   --seq:dump()
 end
 ]]
-
-
-function concatener(i1, i2)
-	local valeur = nil
-	for i = i1, i2, 1 do
-		if valeur == nil then
-			valeur = seq[i].token
-		else
-			valeur = valeur.." "..seq[i].token
-		end
-	end
-	return valeur
-end
-
-function getTagIn(wrap, tag)
-	local k, wrapResults = pairs(seq[wrap])
-	local k, tagResults = pairs(seq[tag])
-	results = {}
-	for k, tagIndices in pairs(tagResults) do
-		for k, wrapIndices in pairs(wrapResults) do
-			if(tagIndices[1]>=wrapIndices[1] and tagIndices[2]<=wrapIndices[2]) then
-				results[#results + 1] = concatener(tagIndices[1], tagIndices[2])
-			end
-		end
-	end
-	return results
-end
-
-function getTag(tag)
-	local results = {}
-	for k,indices in pairs(seq[tag]) do
-		results[#results + 1] = concatener(indices[1], indices[2])
-	end
-	return results
-end
 
 local recettes = {}
 
@@ -138,6 +105,12 @@ io.output(file)
 io.write("recettes = "..serialize(recettes))
 io.close(file)
 
+file = io.open("lexicon/nomsRecettes.txt", "w")
+io.output(file)
+for nomsRecettes, v in pairs(recettes) do
+	io.write(nomsRecettes.."\n")
+end
+io.close(file)
 
 
 
