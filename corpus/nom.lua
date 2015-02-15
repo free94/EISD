@@ -1,6 +1,5 @@
-local nom_sans_recette=string.gsub(arg[1],"recette","")
+local nom_sans_recette=string.gsub(arg[1],"recette_","")
 nom_sans_recette=string.gsub(nom_sans_recette,"_%d*%.txt","")
-nom_sans_recette=string.gsub(nom_sans_recette,"-avis_","")
 nom_sans_recette=string.gsub(nom_sans_recette,"-"," ")
 local nom_final=string.gsub(nom_sans_recette,"","")
 print(nom_final)
