@@ -41,16 +41,40 @@ if containsTag("&qRecette") and containsTag("&cNom") then
 	end
 end
 
+function spairs(t, order)
+    -- collect the keys
+    local keys = {}
+    for k in pairs(t) do keys[#keys+1] = k end
+
+    -- if order function given, sort by it by passing the table and keys a, b,
+    -- otherwise just sort the keys 
+    if order then
+        table.sort(keys, function(a,b) return order(t, a, b) end)
+    else
+        table.sort(keys)
+    end
+
+    -- return the iterator function
+    local i = 0
+    return function()
+        i = i + 1
+        if keys[i] then
+            return keys[i], t[keys[i]]
+        end
+    end
+end
+
 function resultat(recettesOk)
-	for recette, infos in pairs(recettesOk) do
-		print("- "..recette)
+	for nomRecette, score in spairs(recettesOk, function(t,a,b) return t[b] < t[a] end) do
+		--print("["..score.."] "..nomRecette)
+		print("- "..nomRecette)
 	end
 end
 
-function stringliste(liste, conjonction)
+function stringliste(liste)
 	local res = liste[1]
 	for i=2,#liste do
-		if i == #liste then res = res.." "..conjonction.." "..liste[i]
+		if i == #liste then res = res.." et "..liste[i]
 		else res = res..", "..liste[i]
 		end
 	end
@@ -58,67 +82,76 @@ function stringliste(liste, conjonction)
 end
 
 if containsTag("&qListeRecettes") then
+	local reponses = {}
+	local recettesOk = {}
+
+	for nomRecette, infos in pairs(recettes) do
+		recettesOk[nomRecette] = 0
+	end
+	
+
+
 	if containsTag("&cDuree") then
-		local recettesOk = {}
+		reponses[1] = "en moins de "..getTag("&cDuree")[1]
 		local dureeMax = toMinutes(getTagIn("&cDuree","&valeur")[1],getTagIn("&cDuree","&unite")[1])
-		print("Voilà ce qu'il est possible de préparer en moins de "..getTag("&cDuree")[1].." :")
-		for nomRecette, infos in pairs(recettes) do
-			if toMinutes(infos.tempsCuisson.valeur, infos.tempsCuisson.unite) + toMinutes(infos.tempsPreparation.valeur, infos.tempsPreparation.unite) <= dureeMax then
-				print("- "..nomRecette)
+		for nomRecette, score in pairs(recettesOk) do
+			local duree = toMinutes(recettes[nomRecette].tempsCuisson.valeur, recettes[nomRecette].tempsCuisson.unite) + toMinutes(recettes[nomRecette].tempsPreparation.valeur, recettes[nomRecette].tempsPreparation.unite)
+			if duree > dureeMax then
+				recettesOk[nomRecette] = nil
+			else
+				recettesOk[nomRecette] = recettesOk[nomRecette] + duree / dureeMax -- si l'utilisateur dit qu'il a trois heures devant lui, on ne va pas lui proposer de faire une tartine de confiture...
 			end
 		end
 	end
 	if containsTag("&cOutils") then
 		local sans = containsTag("&SANS")
-		local ou = containsTagIn("&cOutils", "&OU")
+		local uniquement = containsTag("&UNIQUEMENT")
 		local instruments = {}
+		local tagsOutils = getTagIn("&cOutils", "&outil")
+		for k,o in pairs(tagsOutils) do
+			addToSet(instruments, o)
+		end
 
 		if sans then
-			local recettesOk = deepcopy(recettes)
-			for nomRecette, infos in pairs(recettes) do
-				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
-					addToSet(instruments, o)
-					if contains(recettesOk[nomRecette].outils, o) then
-						recettesOk[nomRecette] = nil
-						break
-					end
-				end
-			end
-			print("Voici les recettes qu'il est possible de faire sans "..stringliste(instruments, "et").." :")
-			resultat(recettesOk)
-		elseif ou then
-			local recettesOk = {}
-			for nomRecette, infos in pairs(recettes) do
-				local garder = false
-				for k,o in pairs(getTagIn("&cOutils", "&outil")) do
-					addToSet(instruments, o)	
+			for nomRecette, score in pairs(recettesOk) do
+				for k,o in pairs(tagsOutils) do	
 					if contains(recettes[nomRecette].outils, o) then
-						garder = true
-						break
-					end
-				end
-				if garder then
-					recettesOk[nomRecette] = infos
-				end
-			end
-			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "ou").." :")
-			resultat(recettesOk)
-		else -- "avec" et "et"
-			local recettesOk = deepcopy(recettes)
-			for nomRecette, infos in pairs(recettes) do
-				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
-					addToSet(instruments, o)
-					if not contains(recettesOk[nomRecette].outils, o) then
 						recettesOk[nomRecette] = nil
 						break
 					end
 				end
 			end
-			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "et").." :")
-			resultat(recettesOk)
+			reponses[#reponses + 1] = "sans "..stringliste(instruments)
+		elseif uniquement then
+			for nomRecette, score in pairs(recettesOk) do
+				for k,o in pairs(recettes[nomRecette].outils) do
+					if not contains(tagsOutils, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			reponses[#reponses + 1] = "avec uniquement "..stringliste(instruments)
+		else
+			for nomRecette, score in pairs(recettesOk) do
+				local scorebefore = recettesOk[nomRecette]
+				for k,o in pairs(tagsOutils) do
+					if contains(recettes[nomRecette].outils, o) then
+						recettesOk[nomRecette] = recettesOk[nomRecette] + ( 1 / #tagsOutils )
+					end
+				end
+				if recettesOk[nomRecette] - scorebefore == 0 then
+					recettesOk[nomRecette] = nil
+				end
+			end
+			reponses[#reponses + 1] = "avec "..stringliste(instruments)
 		end
 	end
+	print("Voici ce qu'il est possible de faire "..stringliste(reponses).." :")
+	resultat(recettesOk)
 
+	--[[
+	--TODO : rajouter la notion de quantite dans les questions sur les ingrédients
 	if containsTag("&cIngredients") then
 		local sans = containsTag("&SANS")
 		local ou = containsTagIn("&cIngredients", "&OU")
@@ -126,7 +159,7 @@ if containsTag("&qListeRecettes") then
 
 		if sans then
 			local recettesOk = deepcopy(recettes)
-			for nomRecette, infos in pairs(recettes) do
+			for nomRecette, infos in pairs(recettesOk) do
 				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
 					addToSet(aliments, o)
 					if contains(recettesOk[nomRecette].aliments, o) then
@@ -139,7 +172,7 @@ if containsTag("&qListeRecettes") then
 			resultat(recettesOk)
 		elseif ou then
 			local recettesOk = {}
-			for nomRecette, infos in pairs(recettes) do
+			for nomRecette, infos in pairs(recettesOk) do
 				local garder = false
 				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do
 					addToSet(aliments, o)	
@@ -155,7 +188,7 @@ if containsTag("&qListeRecettes") then
 			print("Voici les recettes qu'il est possible de faire avec "..stringliste(aliments, "ou").." :")
 			resultat(recettesOk)
 		else -- "avec" et "et"
-			local recettesOk = deepcopy(recettes)
+			local recettesOk = deepcopy(recettesOk)
 			for nomRecette, infos in pairs(recettes) do
 				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
 					addToSet(aliments, o)
@@ -169,12 +202,17 @@ if containsTag("&qListeRecettes") then
 			resultat(recettesOk)
 		end
 	end
+	]]
 end
 
 
 
 --[[
+-- CARCASSES DE CODE EN VRAC
+--]]
 
+
+--[[
 criteres = {
 	duree = "",
 	outils = "&outil",
@@ -217,14 +255,43 @@ end
 	end
 	resultat(recettesOk)
 	print("Vous pouvez préparer les recettes suivantes : ")
-	resultat(recettesOk)]]
+	resultat(recettesOk)
+
+
+			local recettesOk = {}
+			for nomRecette, infos in pairs(recettes) do
+				local garder = false
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do
+					addToSet(instruments, o)	
+					if contains(recettes[nomRecette].outils, o) then
+						garder = true
+						break
+					end
+				end
+				if garder then
+					recettesOk[nomRecette] = infos
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "ou").." :")
+			resultat(recettesOk)
+		else -- "avec" et "et"
+			local recettesOk = deepcopy(recettes)
+			for nomRecette, infos in pairs(recettes) do
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
+					addToSet(instruments, o)
+					if not contains(recettesOk[nomRecette].outils, o) then
+						recettesOk[nomRecette] = nil
+						break
+					end
+				end
+			end
+			print("Voici les recettes qu'il est possible de faire avec "..stringliste(instruments, "et").." :")
+			resultat(recettesOk)
+		end
 
 
 
 
-
-
---[[
 		--si notre tag n'est pas nul et qu'il est bien demandé par l'utilisateur
 		if	v ~= nil then
 			--recherche dans notre table ce critere, parcours de toute la table recettes

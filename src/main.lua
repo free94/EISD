@@ -104,11 +104,13 @@ for k, file in pairs(t) do
 				for k, valeurIndices in pairs(valeurResults) do
 					if(valeurIndices[1]>=ingredientIndices[1] and valeurIndices[2]<=ingredientIndices[2]) then
 						recettes[nom].aliments[aliment].quantite = concatener(seq, valeurIndices[1], valeurIndices[2])
+						break
 					end
 				end
 				for k, uniteIndices in pairs(uniteResults) do
 					if(uniteIndices[1]>=ingredientIndices[1] and uniteIndices[2]<=ingredientIndices[2]) then
 						recettes[nom].aliments[aliment].unite = concatener(seq, uniteIndices[1], uniteIndices[2])
+						break
 					end
 				end
 			end

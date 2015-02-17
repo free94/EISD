@@ -26,6 +26,7 @@ end
 ]]
 
 question:pattern('[&ET "et" | "ni" ]')
+question:pattern('[&UNIQUEMENT "uniquement" | "seulement" | "juste" | ("rien" "d" "\'" "autre" ) ]')
 question:pattern('[&OU "ou"]')
 question:pattern('[&AVEC "avec"]')
 question:pattern('[&SANS "sans"]')
