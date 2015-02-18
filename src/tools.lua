@@ -103,13 +103,29 @@ function containsTagIn(dans, chercher)
 	return not empty(getTagIn(dans, chercher))
 end
 
-
+--[[
 function toMinutes(valeur, unite)
 	if string.find(unite:lower(), "h") then
 		return tonumber(valeur) * 60
 	else
 		return tonumber(valeur)
 	end
+end
+]]
+
+function uniteStandard(valeur, unite)
+	unite = unite:lower()
+	valeur = tonumber(valeur)
+	if unite == "h" or unite == "heure" or unite == "heures" then
+		return valeur * 60
+	elseif unite == "l" or unite == "litre" or unite == "litres" then
+		return valeur * 1000
+	elseif unite == "cl" then
+		return valeur * 10
+	elseif unite == "kg" or unites == "kilo" or unite == "kilos" then
+		return valeur * 1000
+	end
+	return valeur
 end
 
 function addToSet(set, value)
@@ -118,4 +134,10 @@ function addToSet(set, value)
 		return true
 	end
 	return false
-end	
+end
+
+function tablelength(T)
+	local count = 0
+	for _ in pairs(T) do count = count + 1 end
+	return count
+end

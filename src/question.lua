@@ -34,8 +34,8 @@ question:pattern('[&synonymesCuisiner "faire" | /^pr[ée]parer$/ | "cuisiner" | 
 
 
 question:pattern('[&cDuree [&valeur &NUM] [&unite ( "h" | /^heure/ | /^min/ )] ]')
-question:pattern('[&cIngredients (&aliment .*)+]')
-question:pattern('[&cOutils (&outil .*)+]')
+question:pattern('[&cIngredients ([&ingredient (&valeur &unite "de")? &aliment] .*?)+]')
+question:pattern('[&cOutils (&outil .*?)+]')
 question:pattern('[&critere &cDuree | &cOutils | &cIngredients | &origine | &prix | cPopularite ]')
 question:pattern([[
 	[&qListeRecettes 

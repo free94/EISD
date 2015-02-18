@@ -1,5 +1,23 @@
 structure = dark.pipeline()
 
+
+structure:pattern("'-' [&ingredientRecette /^[^P-].*/+ ] ")
+structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ] ")
+
+structure:pattern([[
+		[&recette
+			[&nom .*?]
+			[&tempsPreparation Temps de "préparation" ":" &NUM . ]
+			[&tempsCuisson Temps de cuisson ":" &NUM . ]
+			[&ingredients "Ingrédients" "(" pour &NUM . ")" ":" [&ingredientsListe .*?] ]
+			[&preparation "Préparation" de la recette ":" .*? ]
+			([&extra Remarques ":" [&remarque .* ] ] | $)
+		]
+	]])
+
+
+
+
 --[[
 	Remarque : comme je ne sais pas matcher les retours à la ligne ni les EOF ni faire des exclusions avec dark,
 	je ne trouve pas comment faire détecter extra autrement qu'avec la solution suivante.
@@ -24,22 +42,7 @@ end
 structure:pattern("[&ingredient '-' @test + ] ('Préparation' | '-') ")
 ]=]
 
-structure:pattern("[&ingredient &NNC &ADJ? (de &NNC)? &ADJ? ]")
-structure:pattern("'-' [&ingredientRecette /^[^P-].*/+ ] ")
-structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ] ")
-
-structure:pattern([[
-		[&recette
-			[&nom .*?]
-			[&tempsPreparation Temps de "préparation" ":" &NUM . ]
-			[&tempsCuisson Temps de cuisson ":" &NUM . ]
-			[&ingredients "Ingrédients" "(" pour &NUM . ")" ":" [&ingredientsListe .*?] ]
-			[&preparation "Préparation" de la recette ":" .*? ]
-			([&extra Remarques ":" [&remarque .* ] ] | $)
-		]
-	]])
-
-
+--structure:pattern("[&ingredient &NNC &ADJ? (de &NNC)? &ADJ? ]")
 --[[
 structure:pattern("[&etape /^%u/ .*? /^[%.;%!]+$/ ]")
 structure:pattern("[&preparation /^Préparation$/ de la recette /^:$/ ([&etape /^%u/ .*? /^[%.;%!]+$/ ] | .)*? ]")
