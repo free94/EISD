@@ -12,7 +12,7 @@ function spairs(t, order)
     for k in pairs(t) do keys[#keys+1] = k end
 
     -- if order function given, sort by it by passing the table and keys a, b,
-    -- otherwise just sort the keys 
+    -- otherwise just sort the keys
     if order then
         table.sort(keys, function(a,b) return order(t, a, b) end)
     else
@@ -63,175 +63,221 @@ tags = {
 	cDuree = 'red',
 	cIngredients = 'red',
 	cOutils = 'red',
-	aliment = 'green'
+	aliment = 'green',
+  cNom = 'blue'
 }
 
 dofile("tableRecettes.lua")
 
-local args = {...}
-local laQuestion = args[1]
+-- local args = {...}
+-- local laQuestion = args[1]
 
-seq = main(laQuestion:gsub('%p', ' %1 '))
-print(seq:tostring(tags))
 
-if containsTag("&qRecette") and containsTag("&cNom") then
-	local question = getTag("&qRecette")[1]
-	for nomRecette, infos in pairs(recettes) do
-		if levenshtein(nomRecette, question, 0.15) then
-			print(recettes[nomRecette].enonce)
-		end
-	end
+local state = {}
+
+local done = false
+print("Bonjour cuisinier en herbe. As-tu des questions à me poser ?")
+
+while not done do
+
+  io.write("\n> ")
+  laQuestion = io.read()
+
+  seq = main(laQuestion:gsub('%p', ' %1 '))
+  print(seq:tostring(tags))
+
+  local stateLess = state.typeQuestion == "qRecette" and not containsTag("&question")
+  if (containsTag("&qRecette") or stateLess) and containsTag("&cNom") then
+    local question = laQuestion
+    if not stateLess then
+      state.typeQuestion = "qRecette"
+  	  question = getTag("&qRecette")[1]
+    end
+  	for nomRecette, infos in pairs(recettes) do
+  		if levenshtein(nomRecette, question, 0.15) then
+  			print(recettes[nomRecette].enonce)
+  		end
+  	end
+  end
+
+  stateLess = state.typeQuestion == "qListeRecettes" and not containsTag("&question")
+  if containsTag("&qListeRecettes") or stateLess then
+    local reponses = {}
+    local recettesOk = {}
+    local sans = containsTag("&SANS")
+    local uniquement = containsTag("&UNIQUEMENT")
+
+    if not stateLess then
+      state.typeQuestion = "qListeRecettes"
+      for nomRecette, infos in pairs(recettes) do
+        recettesOk[nomRecette] = 0
+      end
+    else
+      recettesOk = deepcopy(state.recettesOk)
+    end
+
+  	if containsTag("&cDuree") then
+  		local dureeMax = uniteStandard(getTagIn("&cDuree","&valeur")[1],getTagIn("&cDuree","&unite")[1])
+  		--reponses[1] = "en moins de "..getTag("&cDuree")[1]
+  		reponses[1] = "en moins de "..dureeMax.." minutes"
+  		for nomRecette, score in pairs(recettesOk) do
+  			local duree = uniteStandard(recettes[nomRecette].tempsCuisson.valeur, recettes[nomRecette].tempsCuisson.unite) + uniteStandard(recettes[nomRecette].tempsPreparation.valeur, recettes[nomRecette].tempsPreparation.unite)
+  			if duree > dureeMax then
+  				recettesOk[nomRecette] = nil
+  			else
+  				recettesOk[nomRecette] = recettesOk[nomRecette] + duree / dureeMax -- si l'utilisateur dit qu'il a trois heures devant lui, on ne va pas lui proposer de faire une tartine de confiture...
+  			end
+  		end
+  	end
+  	if containsTag("&cOutils") then
+  		local instruments = {}
+  		local tagsOutils = getTagIn("&cOutils", "&outil")
+  		for k,o in pairs(tagsOutils) do
+  			addToSet(instruments, o)
+  		end
+
+  		if sans then
+  			for nomRecette, score in pairs(recettesOk) do
+  				for k,o in pairs(tagsOutils) do
+  					if contains(recettes[nomRecette].outils, o) then
+  						recettesOk[nomRecette] = nil
+  						break
+  					end
+  				end
+  			end
+  			reponses[#reponses + 1] = "sans "..stringliste(instruments)
+  		elseif uniquement then
+  			for nomRecette, score in pairs(recettesOk) do
+  				for k,o in pairs(recettes[nomRecette].outils) do
+  					if not contains(tagsOutils, o) then
+  						recettesOk[nomRecette] = nil
+  						break
+  					end
+  				end
+  			end
+  			reponses[#reponses + 1] = "avec uniquement "..stringliste(instruments)
+  		else
+  			for nomRecette, score in pairs(recettesOk) do
+  				local scorebefore = recettesOk[nomRecette]
+  				for k,o in pairs(tagsOutils) do
+  					if contains(recettes[nomRecette].outils, o) then
+  						recettesOk[nomRecette] = recettesOk[nomRecette] + ( 1 / #tagsOutils )
+  					end
+  				end
+  				if recettesOk[nomRecette] - scorebefore == 0 then
+  					recettesOk[nomRecette] = nil
+  				end
+  			end
+  			reponses[#reponses + 1] = "avec "..stringliste(instruments)
+  		end
+  	end
+
+  	if containsTag("&cIngredients") then
+  		local aliments = {}
+  		local setAliments = {}
+  		local k, ingredientResults = pairs(seq["&ingredient"])
+  		local k, valeurResults = pairs(seq["&valeur"])
+  		local k, uniteResults = pairs(seq["&unite"])
+  		local k, alimentResults = pairs(seq["&aliment"])
+
+  		for k, ingredientIndices in pairs(ingredientResults) do
+  			local aliment = ""
+  			for k, alimentIndices in pairs(alimentResults) do
+  				if(alimentIndices[1]>=ingredientIndices[1] and alimentIndices[2]<=ingredientIndices[2]) then
+  					aliment = concatener(seq, alimentIndices[1], alimentIndices[2])
+  					break
+  				end
+  			end
+  			if aliment ~= "" then
+  				setAliments[#setAliments + 1] = aliment
+  				aliments[aliment] = "unknown"
+  				for k, valeurIndices in pairs(valeurResults) do
+  					if(valeurIndices[1]>=ingredientIndices[1] and valeurIndices[2]<=ingredientIndices[2]) then
+  						aliments[aliment] = concatener(seq, valeurIndices[1], valeurIndices[2])
+  						break
+  					end
+  				end
+  				for k, uniteIndices in pairs(uniteResults) do
+  					if(uniteIndices[1]>=ingredientIndices[1] and uniteIndices[2]<=ingredientIndices[2]) then
+  						local unite = concatener(seq, uniteIndices[1], uniteIndices[2])
+  						setAliments[#setAliments] = aliments[aliment].." "..unite.." de "..aliment
+  						aliments[aliment] = uniteStandard(aliments[aliment],unite)
+  						break
+  					end
+  				end
+  			end
+  		end
+
+  		local tagsAliments = getTagIn("&cIngredients", "&aliment")
+  		if sans then
+  			for nomRecette, score in pairs(recettesOk) do
+  				for k,a in pairs(tagsAliments) do
+  					if contains(recettes[nomRecette].aliments, a) then
+  						recettesOk[nomRecette] = nil
+  						break
+  					end
+  				end
+  			end
+  			reponses[#reponses + 1] = "sans "..stringliste(setAliments)
+  		elseif uniquement then
+  			for nomRecette, score in pairs(recettesOk) do
+  				for k,a in pairs(recettes[nomRecette].aliments) do
+  					if not contains(tagsAliments, a) or uniteStandard(recettes[nomRecette].aliments[a].quantite, recettes[nomRecette].aliments[a].unite) > aliments[a] then
+  						recettesOk[nomRecette] = nil
+  						break
+  					end
+  				end
+  			end
+  			reponses[#reponses + 1] = "avec uniquement "..stringliste(setAliments)
+  		else
+  			for nomRecette, score in pairs(recettesOk) do
+  				local scorebefore = recettesOk[nomRecette]
+  				for k,a in pairs(tagsAliments) do
+  					if contains(recettes[nomRecette].aliments, a) and (aliments[a] == "unknown" or uniteStandard(recettes[nomRecette].aliments[a].quantite, recettes[nomRecette].aliments[a].unite) <= aliments[a]) then
+  						recettesOk[nomRecette] = recettesOk[nomRecette] + ( 1 / tablelength(tagsAliments) )
+            end
+  				end
+  				if recettesOk[nomRecette] - scorebefore == 0 then
+  					recettesOk[nomRecette] = nil
+  				end
+  			end
+  			reponses[#reponses + 1] = "avec "..stringliste(setAliments)
+  		end
+  	end
+
+    if tablelength(recettesOk) > 0 then
+      if not stateLess then print("Voici ce qu'il est possible de faire "..stringliste(reponses).." :") end
+      resultat(recettesOk)
+      state.recettesOk = recettesOk
+    else
+      print("On ne peut malheureusement rien faire "..stringliste(reponses)..".")
+    end
+  end
+
+
+
 end
 
-if containsTag("&qListeRecettes") then
-	local reponses = {}
-	local recettesOk = {}
-	local sans = containsTag("&SANS")
-	local uniquement = containsTag("&UNIQUEMENT")
 
-	for nomRecette, infos in pairs(recettes) do
-		recettesOk[nomRecette] = 0
-	end
-
-	if containsTag("&cDuree") then
-		local dureeMax = uniteStandard(getTagIn("&cDuree","&valeur")[1],getTagIn("&cDuree","&unite")[1])
-		--reponses[1] = "en moins de "..getTag("&cDuree")[1]
-		reponses[1] = "en moins de "..dureeMax.." minutes"
-		for nomRecette, score in pairs(recettesOk) do
-			local duree = uniteStandard(recettes[nomRecette].tempsCuisson.valeur, recettes[nomRecette].tempsCuisson.unite) + uniteStandard(recettes[nomRecette].tempsPreparation.valeur, recettes[nomRecette].tempsPreparation.unite)
-			if duree > dureeMax then
-				recettesOk[nomRecette] = nil
-			else
-				recettesOk[nomRecette] = recettesOk[nomRecette] + duree / dureeMax -- si l'utilisateur dit qu'il a trois heures devant lui, on ne va pas lui proposer de faire une tartine de confiture...
-			end
-		end
-	end
-	if containsTag("&cOutils") then
-		local instruments = {}
-		local tagsOutils = getTagIn("&cOutils", "&outil")
-		for k,o in pairs(tagsOutils) do
-			addToSet(instruments, o)
-		end
-
-		if sans then
-			for nomRecette, score in pairs(recettesOk) do
-				for k,o in pairs(tagsOutils) do	
-					if contains(recettes[nomRecette].outils, o) then
-						recettesOk[nomRecette] = nil
-						break
-					end
-				end
-			end
-			reponses[#reponses + 1] = "sans "..stringliste(instruments)
-		elseif uniquement then
-			for nomRecette, score in pairs(recettesOk) do
-				for k,o in pairs(recettes[nomRecette].outils) do
-					if not contains(tagsOutils, o) then
-						recettesOk[nomRecette] = nil
-						break
-					end
-				end
-			end
-			reponses[#reponses + 1] = "avec uniquement "..stringliste(instruments)
-		else
-			for nomRecette, score in pairs(recettesOk) do
-				local scorebefore = recettesOk[nomRecette]
-				for k,o in pairs(tagsOutils) do
-					if contains(recettes[nomRecette].outils, o) then
-						recettesOk[nomRecette] = recettesOk[nomRecette] + ( 1 / #tagsOutils )
-					end
-				end
-				if recettesOk[nomRecette] - scorebefore == 0 then
-					recettesOk[nomRecette] = nil
-				end
-			end
-			reponses[#reponses + 1] = "avec "..stringliste(instruments)
-		end
-	end
-
-	if containsTag("&cIngredients") then
-		local aliments = {}
-		local setAliments = {}
-		local k, ingredientResults = pairs(seq["&ingredient"])
-		local k, valeurResults = pairs(seq["&valeur"])
-		local k, uniteResults = pairs(seq["&unite"])
-		local k, alimentResults = pairs(seq["&aliment"])
-
-		for k, ingredientIndices in pairs(ingredientResults) do
-			local aliment = ""
-			for k, alimentIndices in pairs(alimentResults) do
-				if(alimentIndices[1]>=ingredientIndices[1] and alimentIndices[2]<=ingredientIndices[2]) then
-					aliment = concatener(seq, alimentIndices[1], alimentIndices[2])
-					break
-				end
-			end
-			if aliment ~= "" then
-				setAliments[#setAliments + 1] = aliment
-				aliments[aliment] = "unknown"
-				for k, valeurIndices in pairs(valeurResults) do
-					if(valeurIndices[1]>=ingredientIndices[1] and valeurIndices[2]<=ingredientIndices[2]) then
-						aliments[aliment] = concatener(seq, valeurIndices[1], valeurIndices[2])
-						break
-					end
-				end
-				for k, uniteIndices in pairs(uniteResults) do
-					if(uniteIndices[1]>=ingredientIndices[1] and uniteIndices[2]<=ingredientIndices[2]) then
-						local unite = concatener(seq, uniteIndices[1], uniteIndices[2])
-						setAliments[#setAliments] = aliments[aliment].." "..unite.." de "..aliment
-						aliments[aliment] = uniteStandard(aliments[aliment],unite)
-						break
-					end
-				end
-			end
-		end
-
-		local tagsAliments = getTagIn("&cIngredients", "&aliment")
-		if sans then 
-			for nomRecette, score in pairs(recettesOk) do
-				for k,a in pairs(tagsAliments) do
-					if contains(recettes[nomRecette].aliments, a) then
-						recettesOk[nomRecette] = nil
-						break
-					end
-				end
-			end
-			reponses[#reponses + 1] = "sans "..stringliste(setAliments)
-		elseif uniquement then 
-			for nomRecette, score in pairs(recettesOk) do
-				for k,a in pairs(recettes[nomRecette].aliments) do
-					if not contains(tagsAliments, a) or uniteStandard(recettes[nomRecette].aliments[a].quantite, recettes[nomRecette].aliments[a].unite) > aliments[a] then
-						recettesOk[nomRecette] = nil
-						break
-					end
-				end
-			end
-			reponses[#reponses + 1] = "avec uniquement "..stringliste(setAliments)
-		else 
-			for nomRecette, score in pairs(recettesOk) do
-				local scorebefore = recettesOk[nomRecette]
-				for k,a in pairs(tagsAliments) do
-					if contains(recettes[nomRecette].aliments, a) and (aliments[a] == "unknown" or uniteStandard(recettes[nomRecette].aliments[a].quantite, recettes[nomRecette].aliments[a].unite) <= aliments[a]) then
-						recettesOk[nomRecette] = recettesOk[nomRecette] + ( 1 / #tagsAliments )
-					end
-				end
-				if recettesOk[nomRecette] - scorebefore == 0 then
-					recettesOk[nomRecette] = nil
-				end
-			end
-			reponses[#reponses + 1] = "avec "..stringliste(setAliments)
-		end
-
-		if tablelength(recettesOk) > 0 then
-			print("Voici ce qu'il est possible de faire "..stringliste(reponses).." :")
-			resultat(recettesOk)
-		else
-			print("On ne peut malheureusement rien faire "..stringliste(reponses)..".")
-		end
-	end
-end
-
+--[[
+-- CARCASSES DE CODE EN VRAC
+--]]
 
 	--[[
+
+  -- if not repondu then
+  --   if state.typeQuestion == "qRecette" then
+  --     for nomRecette, infos in pairs(recettes) do
+  --       if levenshtein(nomRecette, laQuestion, 0.15) then
+  --         print(recettes[nomRecette].enonce)
+  --       end
+  --     end
+  --   end
+  --   if state.typeQuestion == "qListeRecettes" then
+  --
+  --   end
+  -- end
+
 	--TODO : rajouter la notion de quantite dans les questions sur les ingrédients
 	if containsTag("&cIngredients") then
 		local sans = containsTag("&SANS")
@@ -241,7 +287,7 @@ end
 		if sans then
 			local recettesOk = deepcopy(recettes)
 			for nomRecette, infos in pairs(recettesOk) do
-				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
+				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do
 					addToSet(aliments, o)
 					if contains(recettesOk[nomRecette].aliments, o) then
 						recettesOk[nomRecette] = nil
@@ -256,7 +302,7 @@ end
 			for nomRecette, infos in pairs(recettesOk) do
 				local garder = false
 				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do
-					addToSet(aliments, o)	
+					addToSet(aliments, o)
 					if contains(recettes[nomRecette].aliments, o) then
 						garder = true
 						break
@@ -271,7 +317,7 @@ end
 		else -- "avec" et "et"
 			local recettesOk = deepcopy(recettesOk)
 			for nomRecette, infos in pairs(recettes) do
-				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do	
+				for k,o in pairs(getTagIn("&cIngredients", "&aliment")) do
 					addToSet(aliments, o)
 					if not contains(recettesOk[nomRecette].aliments, o) then
 						recettesOk[nomRecette] = nil
@@ -285,9 +331,7 @@ end
 	end
 	]]
 
---[[
--- CARCASSES DE CODE EN VRAC
---]]
+
 
 
 --[[
@@ -340,7 +384,7 @@ end
 			for nomRecette, infos in pairs(recettes) do
 				local garder = false
 				for k,o in pairs(getTagIn("&cOutils", "&outil")) do
-					addToSet(instruments, o)	
+					addToSet(instruments, o)
 					if contains(recettes[nomRecette].outils, o) then
 						garder = true
 						break
@@ -355,7 +399,7 @@ end
 		else -- "avec" et "et"
 			local recettesOk = deepcopy(recettes)
 			for nomRecette, infos in pairs(recettes) do
-				for k,o in pairs(getTagIn("&cOutils", "&outil")) do	
+				for k,o in pairs(getTagIn("&cOutils", "&outil")) do
 					addToSet(instruments, o)
 					if not contains(recettesOk[nomRecette].outils, o) then
 						recettesOk[nomRecette] = nil
@@ -375,7 +419,7 @@ end
 			--recherche dans notre table ce critere, parcours de toute la table recettes
 			for k2,v2 in pairs(recettes) do
 				--getTag renvoi la string contenue dans un tag
-				if string.gmatch(k2["&k"], &critere) then 
+				if string.gmatch(k2["&k"], &critere) then
 					--on a une recette contenant le critere courant recherche
 					if premierPassage == true then
 						resultats[#resultats+1] = nomRecette
@@ -385,11 +429,11 @@ end
 						end
 						--fusion des deux tables pour ne garder que les recettes contenant l'ensemble des criteres
 						--resultats = fusion(resultatsTemp, resultats)
-					end				
+					end
 				end
-				
+
 			end
-							
+
 		end
 ]]
 --print(laQuestion)
@@ -411,7 +455,7 @@ for k, file in pairs(t) do
 
 		print(seq:tostring(tags))
 
-		
+
 		nom = getTag("&nom")[1]
 		print(nom)
 		recettes[nom] = {}
@@ -423,7 +467,7 @@ for k, file in pairs(t) do
 		recettes[nom].tempsCuisson = {}
 		recettes[nom].tempsCuisson.valeur = getTagIn("&temps_cuisson", "&valeur")[1]
 		recettes[nom].tempsCuisson.unite = getTagIn("&temps_cuisson", "&unite")[1]
-		
+
 		recettes[nom].etapes = getTagIn("&preparation", "&etape")
 
 		recettes[nom].ingredients = {}

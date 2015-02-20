@@ -38,7 +38,7 @@ question:pattern('[&cIngredients ([&ingredient (&valeur &unite "de")? &aliment] 
 question:pattern('[&cOutils (&outil .*?)+]')
 question:pattern('[&critere &cDuree | &cOutils | &cIngredients | &origine | &prix | cPopularite ]')
 question:pattern([[
-	[&qListeRecettes 
+	[&qListeRecettes
 		.* ( &synonymesCuisiner | "recettes" | /^plat/ | /^dessert/ | /^entr[ée]e/ ) .* &critere .*
 	]
 ]])
@@ -53,7 +53,7 @@ question:pattern([[
 
 question:add(tagNomRecette)
 question:pattern('[&qRecette ( .* "recette" |  "Comment" &synonymesCuisiner ) .* ]')
-
+question:pattern('[&question &qRecette | &qListeRecettes]')
 
 
 
@@ -62,7 +62,7 @@ question:pattern('[&qRecette ( .* "recette" |  "Comment" &synonymesCuisiner ) .*
 
 
 question:pattern([[
-	[&qRecette 
+	[&qRecette
 		.* /^[Rr]ecette/ .* &critere*? .* | &critere*? .* /^[Rr]ecette/ .*
 	]
 ]])
@@ -71,4 +71,3 @@ question:pattern([[
 --&prix : même pattern pour l'analyse des questions ou du texte, on réutilise le pattern prix existant
 --&origine : pareil =)
 --&outil : même combat
-

@@ -33,7 +33,8 @@ tags = {--[[
 	prix ='blue',
 	nom = 'yellow',]]
 	ingredientsListe = 'blue',
-	remarque = 'red'
+	remarque = 'red',
+	pour = 'green'
 }
 
 -- affichage
@@ -63,9 +64,9 @@ for k, file in pairs(t) do
 		seq = main(recetteTxt:gsub('%p', ' %1 '))
 		f:close()
 
-		print(seq:tostring(tags))
+		-- print(seq:tostring(tags))
 
-		
+
 		nom = getTag("&nom")[1]
 		print(nom)
 		recettes[nom] = {}
@@ -79,11 +80,15 @@ for k, file in pairs(t) do
 		recettes[nom].tempsCuisson = {}
 		recettes[nom].tempsCuisson.valeur = tonumber(getTagIn("&tempsCuisson", "&valeur")[1])
 		recettes[nom].tempsCuisson.unite = getTagIn("&tempsCuisson", "&unite")[1]
-		
+
 		recettes[nom].etapes = getTagIn("&preparation", "&etape")
 
 		recettes[nom].ingredients = {}
 		recettes[nom].ingredients = getTagIn("&ingredientsListe", "&ingredientRecette")
+
+		recettes[nom].pour = {}
+		recettes[nom].pour.valeur = tonumber(getTagIn("&pour", "&valeur")[1])
+		recettes[nom].pour.unite = getTagIn("&pour", "&unite")[1]
 
 		recettes[nom].aliments = {}
 
@@ -146,7 +151,3 @@ file = io.open("tableRecettes.lua", "w")
 io.output(file)
 io.write("recettes = "..serialize(recettes))
 io.close(file)
-
-
-
-

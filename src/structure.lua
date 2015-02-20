@@ -9,7 +9,7 @@ structure:pattern([[
 			[&nom .*?]
 			[&tempsPreparation Temps de "préparation" ":" &NUM . ]
 			[&tempsCuisson Temps de cuisson ":" &NUM . ]
-			[&ingredients "Ingrédients" "(" pour &NUM . ")" ":" [&ingredientsListe .*?] ]
+			[&ingredients "Ingrédients" "(" pour [&pour &quantite] ")" ":" [&ingredientsListe .*?] ]
 			[&preparation "Préparation" de la recette ":" .*? ]
 			([&extra Remarques ":" [&remarque .* ] ] | $)
 		]
