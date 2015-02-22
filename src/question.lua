@@ -39,7 +39,7 @@ question:pattern('[&cOutils (&outil .*?)+]')
 question:pattern('[&critere &cDuree | &cOutils | &cIngredients | &origine | &prix | cPopularite ]')
 question:pattern([[
 	[&qListeRecettes
-		.* ( &synonymesCuisiner | "recettes" | /^plat/ | /^dessert/ | /^entr[ée]e/ ) .* &critere .*
+		^ /^[Qq]u/ .* ( &synonymesCuisiner | "recettes" | /^plat/ | /^dessert/ | /^entr[ée]e/ ) .* &critere .*
 	]
 ]])
 
@@ -52,9 +52,23 @@ question:pattern([[
 ]]
 
 question:add(tagNomRecette)
-question:pattern('[&qRecette ( .* "recette" |  "Comment" &synonymesCuisiner ) .* ]')
-question:pattern('[&question &qRecette | &qListeRecettes]')
+question:pattern('[&qRecette ( /^[Qq]u/ .* "recette" |  /omment$/ &synonymesCuisiner ) .* ]')
 
+
+question:pattern('[&qDuree .* /ombien$/ "de" "temps" .* ]')
+question:pattern('[&qCuisson .* "temps" "de" "cuisson" .* ]')
+question:pattern('[&qPreparation .* "temps" "de" /^pr[ée]paration$/ .* ]')
+
+question:pattern('[&qPourCombien .* /^[Pp]our$/ ("combien" | "quelle" /^quantit/) .* ]')
+
+-- TODO : Quelles sont les étapes ? Qu'elle est la première étape ? Qu'elle est l'étape n ? Quelle est l'étape suivante ? Quelle est l'étape qui suit ? Que dois-je faire ensuite ? Et ensuite ?
+--question:pattern('[&qEtape  ]')
+
+question:pattern('[&qQuantite .* ("combien" | "quelle" /^quantit/) .* &aliment .* ]')
+
+question:pattern('[&qIngredients .* /^[Qq]u/ .* (/^ingr[ée]dient/ | /^aliment/) .* ]')
+
+question:pattern('[&question &qRecette | &qListeRecettes | &qDuree | &qCuisson | &qPreparation | &qPourCombien | &qQuantite | &qIngredients]')
 
 
 

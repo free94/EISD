@@ -91,6 +91,11 @@ function levenshtein(chercher, dans, tolerance)
 	return distance[len1][len2] - (#str1-#str2) <= tolerance*#str2
 end
 
+function levenshteinAB(a,b,tolerance)
+	if string.len(a)<=string.len(b) then return levenshtein(a,b,tolerance)
+	else return levenshtein(b,a,tolerance) end
+end
+
 function empty(tab)
 	return next(tab) == nil
 end
@@ -140,4 +145,88 @@ function tablelength(T)
 	local count = 0
 	for _ in pairs(T) do count = count + 1 end
 	return count
+end
+
+function getRecette(recettes, question, state)
+	if containsTag("&cNom") then 
+		for nomRecette, infos in pairs(recettes) do
+			if levenshtein(nomRecette, question, 0.15) then
+				state.recetteCourante = nomRecette
+				return nomRecette
+			end
+		end
+	elseif contains(state,"recetteCourante") then
+		return state.recetteCourante
+	end
+	return nil
+end
+
+sorryIndex = 1
+function sorry()
+	local rep =
+	{
+		[1] = "Pardonnez-moi, je ne trouve pas de réponse.",
+		[2] = "Excusez-moi, je ne parviens pas à répondre.",
+		[3] = "Désolé, je n'arrive pas à répondre.",
+		[4] = "Je n'ai pas réponse à tout !",
+	}
+	print(rep[sorryIndex])
+	if sorryIndex == #rep then sorryIndex = 1
+	else sorryIndex = sorryIndex + 1 end
+end
+
+function getSimilarIn(table, string)
+	for k,v1 in pairs(table) do
+		if levenshteinAB(string,k, 0.15) then return k
+		elseif type(v1) == "table" then getSimilarIn(v1,string)
+		elseif levenshteinAB(string,v1, 0.15) then return v1
+		end
+	end
+	return nil
+end
+
+function spairs(t, order)
+    -- collect the keys
+    local keys = {}
+    for k in pairs(t) do keys[#keys+1] = k end
+
+    -- if order function given, sort by it by passing the table and keys a, b,
+    -- otherwise just sort the keys
+    if order then
+        table.sort(keys, function(a,b) return order(t, a, b) end)
+    else
+        table.sort(keys)
+    end
+
+    -- return the iterator function
+    local i = 0
+    return function()
+        i = i + 1
+        if keys[i] then
+            return keys[i], t[keys[i]]
+        end
+    end
+end
+
+function resultat(recettesOk)
+	local nbMax = 30
+	for nomRecette, score in spairs(recettesOk, function(t,a,b) return t[b] < t[a] end) do
+		if nbMax == 0 then
+			print("...")
+			return
+		end
+		--print("["..score.."] "..nomRecette)
+		print("- "..nomRecette)
+		nbMax = nbMax - 1
+	end
+end
+
+function stringliste(liste)
+	local res = liste[1]
+	for i=2,#liste do
+		if i == #liste then res = res.." et "..liste[i]
+		else res = res..", "..liste[i]
+		end
+	end
+	return res
 end
