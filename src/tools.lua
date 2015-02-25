@@ -1,4 +1,5 @@
 
+-- retourne la concatenation des tokens de la sequence seq qui sont compris entre les indices i1 et i2
 function concatener(seq, i1, i2)
 	local valeur = nil
 	if i1 == i2 then return seq[i1].token end
@@ -12,6 +13,7 @@ function concatener(seq, i1, i2)
 	return valeur
 end
 
+-- retourne les chaines de caracteres correspondant a la concatenation des tokens portant le tag "tag" et qui sont a l'interieur d'un tag "wrap"
 function getTagIn(wrap, tag)
 	local k, wrapResults = pairs(seq[wrap])
 	local k, tagResults = pairs(seq[tag])
@@ -26,6 +28,7 @@ function getTagIn(wrap, tag)
 	return results
 end
 
+-- retourne les chaines de caracteres correspondant a la concatenation des tokens portant le tag "tag"
 function getTag(tag)
 	local results = {}
 	if tag ~= "" then
@@ -36,6 +39,7 @@ function getTag(tag)
 	return results
 end
 
+-- retourne une table contenant les paires de la table t1 et celles de t2
 function fusion(t1, t2)
 	local resultats = {}
 	for k,v in pairs(t2) do
@@ -44,6 +48,7 @@ function fusion(t1, t2)
 	return resultats
 end
 
+-- retourne un clone de la table orig
 function deepcopy(orig)
     local orig_type = type(orig)
     local copy
@@ -59,6 +64,7 @@ function deepcopy(orig)
     return copy
 end
 
+-- teste si la table t contient v (que ce soit en tant que clef ou valeur)
 function contains(t, v)
 	for k,v1 in pairs(t) do
 		if k == v then return true
@@ -69,6 +75,7 @@ function contains(t, v)
 	return false
 end
 
+-- teste si la chaine "dans" contient a peu pres la chaine "chercher", le degre de permissivite etant "tolerance"  
 function levenshtein(chercher, dans, tolerance)
 	local str1  = dans
 	local str2 = chercher
@@ -91,33 +98,28 @@ function levenshtein(chercher, dans, tolerance)
 	return distance[len1][len2] - (#str1-#str2) <= tolerance*#str2
 end
 
+-- teste si les chaines a et b sont similaires, le degre de permissivite etant "tolerance"
 function levenshteinAB(a,b,tolerance)
 	if string.len(a)<=string.len(b) then return levenshtein(a,b,tolerance)
 	else return levenshtein(b,a,tolerance) end
 end
 
+-- teste si la table tab est vide
 function empty(tab)
 	return next(tab) == nil
 end
 
+-- teste si la derniere sequence contient le tag "tag"
 function containsTag(tag)
 	return not empty(getTag(tag))
 end
 
+-- teste si la derniere sequence contient le tag "chercher" a l'interieur d'un tag "dans"
 function containsTagIn(dans, chercher)
 	return not empty(getTagIn(dans, chercher))
 end
 
---[[
-function toMinutes(valeur, unite)
-	if string.find(unite:lower(), "h") then
-		return tonumber(valeur) * 60
-	else
-		return tonumber(valeur)
-	end
-end
-]]
-
+-- convertit la valeur dans une unite standard
 function uniteStandard(valeur, unite)
 	unite = unite:lower()
 	valeur = tonumber(valeur)
@@ -133,6 +135,7 @@ function uniteStandard(valeur, unite)
 	return valeur
 end
 
+-- ajoute la valeur "value" dans la table "set" sauf si elle est deja presente
 function addToSet(set, value)
 	if not contains(set, value) then
 		set[#set + 1] = value
@@ -141,12 +144,14 @@ function addToSet(set, value)
 	return false
 end
 
+-- retourne la taille de la table T
 function tablelength(T)
 	local count = 0
 	for _ in pairs(T) do count = count + 1 end
 	return count
 end
 
+-- retourne le nom de la recette contenue dans la question ou, s'il n'y en a pas, le nom de la derniere recette utilise
 function getRecette(recettes, question, state)
 	if containsTag("&cNom") then 
 		for nomRecette, infos in pairs(recettes) do
@@ -161,6 +166,7 @@ function getRecette(recettes, question, state)
 	return nil
 end
 
+-- retourne une chaine d'excuse
 sorryIndex = 1
 function sorry()
 	local rep =
@@ -175,6 +181,7 @@ function sorry()
 	else sorryIndex = sorryIndex + 1 end
 end
 
+-- retourne une chaine similaire a string presente dans table
 function getSimilarIn(table, string)
 	for k,v1 in pairs(table) do
 		if levenshteinAB(string,k, 0.15) then return k
@@ -185,6 +192,7 @@ function getSimilarIn(table, string)
 	return nil
 end
 
+-- enumerateur qui prend en parametre un comparateur
 function spairs(t, order)
     -- collect the keys
     local keys = {}
@@ -208,6 +216,7 @@ function spairs(t, order)
     end
 end
 
+-- affiche les noms et scores des recettes contenu dans la table recettesOk dont le schema est {[nom_recette] = score,}
 function resultat(recettesOk)
 	local nbMax = 30
 	for nomRecette, score in spairs(recettesOk, function(t,a,b) return t[b] < t[a] end) do
@@ -215,12 +224,13 @@ function resultat(recettesOk)
 			print("...")
 			return
 		end
-		--print("["..score.."] "..nomRecette)
-		print("- "..nomRecette)
+		print("["..score.."] "..nomRecette)
+		--print("- "..nomRecette)
 		nbMax = nbMax - 1
 	end
 end
 
+-- concatene une liste de chaines avec des ',' et "et"
 function stringliste(liste)
 	local res = liste[1]
 	for i=2,#liste do

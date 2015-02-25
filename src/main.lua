@@ -5,6 +5,9 @@ require('origine')
 require('prix')
 require('outil')
 
+-- PARAMETRES
+local dir = "../corpus/txtrecettes/" -- dossier contenant le corpus de recettes
+local baseDeDonnees = "tableRecettes.lua" -- nom du fichier a creer
 
 main = dark.pipeline()
 main:model("model/postag-fr")
@@ -14,61 +17,41 @@ main:add(structure)
 main:add(origine)
 main:add(prix)
 main:add(outil)
+
 -- tags a afficher
 tags = {--[[
-	etape             = 'red',
-	quantite          = 'red',
-	valeur            = 'green',
-	unite             = 'green',
-	tempsPreparation = 'yellow',
-	tempsCuisson = 'yellow',]]
-	ingredientRecette = 'magenta',
-	ingredients = 'yellow',
-	ingredient = 'green',
-	--[[preparation = 'yellow',
-	extra = 'yellow',
-	origine  = 'magenta',]]
-	outil = 'cyan',
-	--[[remarque='red',
-	prix ='blue',
-	nom = 'yellow',]]
-	ingredientsListe = 'blue',
-	remarque = 'red',
-	pour = 'green'
+	-- tag_sans_& = 'couleur'
+	]]
+	recette = 'red'
 }
-
--- affichage
---[[
-for line in io.lines() do
-  seq = main(line:gsub('%p', ' %1 '))
-  print(seq:tostring(tags))
-  --seq:dump()
-end
-]]
 
 local recettes = {}
 
 
 local i, t, popen = 0, {}, io.popen
-local dir = "../corpus/sub/"
 for filename in popen('ls -a "'..dir..'"'):lines() do
     i = i + 1
     t[i] = filename
 end
 
 for k, file in pairs(t) do
+	--file = "recette_confiture-de-peches-de-vigne-a-la-lavande_95698.txt"
 	if file ~= "." and file ~= ".." then
 		print(dir..file)
+
 		local f = assert(io.open(dir..file, "r"))
 		local recetteTxt = f:read("*all")
+		
 		seq = main(recetteTxt:gsub('%p', ' %1 '))
 		f:close()
 
-		-- print(seq:tostring(tags))
+		--print(seq:tostring(tags))
 
+
+		-- Construction de la base de donnees
 
 		nom = getTag("&nom")[1]
-		print(nom)
+		--print(nom)
 		recettes[nom] = {}
 
 		recettes[nom].enonce = recetteTxt
@@ -87,8 +70,13 @@ for k, file in pairs(t) do
 		recettes[nom].ingredients = getTagIn("&ingredientsListe", "&ingredientRecette")
 
 		recettes[nom].pour = {}
-		recettes[nom].pour.valeur = tonumber(getTagIn("&pour", "&valeur")[1])
-		recettes[nom].pour.unite = getTagIn("&pour", "&unite")[1]
+		if containsTagIn("&pour", "&quantite") then
+			recettes[nom].pour.valeur = tonumber(getTagIn("&pour", "&valeur")[1])
+			recettes[nom].pour.unite = getTagIn("&pour", "&unite")[1]
+		else
+			recettes[nom].pour.valeur = tonumber(getTagIn("&pour", "&NUM")[1])
+			recettes[nom].pour.unite = "personnes"
+		end
 
 		recettes[nom].aliments = {}
 
@@ -96,6 +84,8 @@ for k, file in pairs(t) do
 		local k, valeurResults = pairs(seq["&valeur"])
 		local k, uniteResults = pairs(seq["&unite"])
 		local k, alimentResults = pairs(seq["&aliment"])
+
+		-- Galipettes pour associer la quantite d'un ingredient a son aliment 
 		for k, ingredientIndices in pairs(ingredientResults) do
 			local aliment = ""
 			for k, alimentIndices in pairs(alimentResults) do
@@ -143,11 +133,10 @@ for k, file in pairs(t) do
 				recettes[nom].outils[#recettes[nom].outils + 1] = o
 			end
 		end
-		--print(serialize(recettes[nom].ingredients))
 
 	end
 end
-file = io.open("tableRecettes.lua", "w")
+file = io.open(baseDeDonnees, "w")
 io.output(file)
 io.write("recettes = "..serialize(recettes))
 io.close(file)
