@@ -4,9 +4,11 @@ require('structure')
 require('origine')
 require('prix')
 require('outil')
+require('avis')
 
 -- PARAMETRES
 local dir = "../corpus/txtrecettes/" -- dossier contenant le corpus de recettes
+local diravis = "../corpus/txtavis/" -- dossier contenant les avis sur les recettes
 local baseDeDonnees = "tableRecettes.lua" -- nom du fichier a creer
 
 main = dark.pipeline()
@@ -22,7 +24,8 @@ main:add(outil)
 tags = {--[[
 	-- tag_sans_& = 'couleur'
 	]]
-	recette = 'red'
+	recette = 'red',
+	avis = 'blue'
 }
 
 local recettes = {}
@@ -119,11 +122,7 @@ for k, file in pairs(t) do
 
 		recettes[nom].origine = getTag("&origine")[1]
 
-		recettes[nom].popularite = #getTag("&avis")
-
 		recettes[nom].remarques = getTag("&remarque")[1]
-
-		recettes[nom].avis = getTag("&avis")
 
 		recettes[nom].prix = getTag("&prix")
 
@@ -136,6 +135,38 @@ for k, file in pairs(t) do
 
 	end
 end
+
+main:add(avis)
+
+local i, t, popen = 0, {}, io.popen
+for filename in popen('ls -a "'..diravis..'"'):lines() do
+    i = i + 1
+    t[i] = filename
+end
+
+for k, file in pairs(t) do
+	if file ~= "." and file ~= ".." then
+		print(diravis..file)
+		local f = assert(io.open(diravis..file, "r"))
+		local avisTxt = f:read("*all")
+		f:close()
+		
+		seq = main(avisTxt:gsub('%p', ' %1 '))
+		--print(seq:tostring(tags))
+		
+		local tagAvis = getTag("&avis")
+		nom = tagAvis[1]
+
+		table.remove(tagAvis, 1)
+		if recettes[nom] ~= nil then
+			recettes[nom].avis = tagAvis
+			recettes[nom].popularite = #tagAvis
+		end
+	end
+end
+
+
+
 file = io.open(baseDeDonnees, "w")
 io.output(file)
 io.write("recettes = "..serialize(recettes))
